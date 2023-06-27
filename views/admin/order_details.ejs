@@ -1,0 +1,90 @@
+<%- include('header') %>
+
+
+            <!-- Widgets Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-md-6 col-xl-7">
+                        <div class="h-100 bg-secondary rounded p-4">
+                            
+
+                            
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <h6 class="mb-0">Products Details</h6>
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No:</th>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">quantity</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Image</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% order_data.items.forEach(function(items,index) { %>
+                                        <tr>
+                                
+                                            <td><%= index+1 %></td>
+
+                                            <td >
+                                                <%= items.product.name %>
+                                            </td>
+                                                 
+                                            <td>
+                                                    <%= items.quantity %> <br>
+                                            </td>
+                                            <td>
+                                                 ₹<%= items.price %>
+                                            </td>
+                                            <td>
+                                                <img src="/<%= items.product.photo[0] %>" class="img-thumbnail" width="60px" alt=""> 
+                                            </td>
+                                          </tr>
+                                          <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-5">
+                        <div class="h-100 bg-secondary rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Order Details</h6>
+                            </div>
+                            <div>
+                                <ul class="orderd">
+                                    <li>Customer Name: <span> <%= order_data.user.name %>  </span> </li>
+                                    <li>Ordered Date: <span> <%= order_data.createdAt.toLocaleDateString() %>  </span> </li>
+                                    <li>Ordered Status: <span> <%= order_data.status %>  </span> </li>
+                                    <li>Total Price: <span> ₹<%= order_data.total %>  </span> </li>
+                                    <li>Payment Method: <span> <%= order_data.payment_method %>  </span> </li>
+                                </ul>
+                            </div>
+                              <p class="text-white">Billing Address</p>
+                            <div>
+                                <ul class="orderaddre">
+                                    <li>Fullname: <span><%= order_data.address.firstName %> <%= order_data.address.lastName %></span></li>
+                                    <li>Address: <span><%= order_data.address.address %> </span></li>       
+                                    <li>Phone No: <span><%= order_data.address.phone %> </span></li>       
+                                    <li>Pincode: <span><%= order_data.address.pincode %> </span></li>       
+                                    <li>City: <span><%= order_data.address.city %> </span></li>       
+                                    <li>Email: <span><%= order_data.address.email %> </span></li>       
+                                </ul>
+                            </div>
+                            <div id="calender"></div>
+                        </div>
+                    </div>
+                </div>
+              
+            </div>
+            <!-- Widgets End -->
+
+           
+
+
+   <%- include('footer') %>

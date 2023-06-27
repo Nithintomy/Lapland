@@ -1,0 +1,51 @@
+<%- include ('header')%>
+<body>
+
+    <!-- Start Header Area -->
+	
+	<!-- End Header Area -->
+
+    <!-- Start Banner Area -->
+    
+    <!-- End Banner Area -->
+
+    <!--================Checkout Area =================-->
+    <section class="checkout_area section_gap">
+        <div class="container">
+            <div class="billing_details">
+                <div class="row ">
+                        <div class="col-md-12"> 
+                              <div class = "main">
+                                  <div class="row padder"> 
+                                      <div class="col-md-9"> 
+                                        <h3>Order Placed Successfully </h3>
+                                        <p>Thank you for your order!</p>
+                                          <h5> Your Paypal Payment was: <%= payment.state %></h5>
+                                          <h6> Payment Id: <%= payment.id %> </h6> 
+                                          <hr>
+                                          <img src="https://xenoapp.com/wp-content/uploads/2020/01/Signs-of-a-Satisfied-Customer.png"
+                                                    alt="Order Placed" />
+                                         
+                                          <hr> 
+                                          <div class="card-body">
+                                            <a href="/shop" class="btn btn-primary btn-lg">Continue Shopping</a>
+                                            <a href="/order/<%= User._id %>" class="btn btn-primary btn-lg">View Orders</a>
+                                          </div>
+                                      </div> 
+                                  </div> 
+                               </div>
+                        </div> 
+                   </div>
+            </div>
+        </div>
+    </section>
+   
+    <!--================End Checkout Area =================-->
+
+    <!-- start footer Area -->
+
+    <!-- End footer Area -->
+
+
+  
+    <%- include ('footer')%>

@@ -1,0 +1,118 @@
+<%- include('header') %>
+
+
+ <!-- Form Start -->
+                  
+ <div class="container-fluid pt-4 px-4">
+  <div class="row g-4 align-items-center justify-content-center mt-5">
+    <div class="col-sm-12 col-xl-6">
+      <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4">Add Product</h6>
+        <div>
+          <% if(locals.msg) { %>
+            <div id="msg" class="alert alert-success"><%- locals.msg -%></div>
+            <%}%>
+        </div>
+        <form action="/add_product" id="update_product" name="basic" method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label
+                    for="name"
+                    >Product Name
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    class="form-control validate "
+                    required
+                  />
+          </div>
+          <div class="mb-3">
+            <label
+            for="price"
+            >Price
+          </label>
+          <input
+            id="int"
+            name="price"
+            type="number"
+            class="form-control validate "
+            required
+          />
+          </div>
+          <div class="mb-3">
+            <label
+            for="quantity"
+            >Quantity
+          </label>
+          <input
+            id="int"
+            name="quantity"
+            type="number"
+            class="form-control validate "
+            required
+          />
+          </div>
+          <div class="mb-3">
+            <label
+                    for="details"
+                    >Specification
+                  </label>
+                  <input
+                    id="details"
+                    name="details"
+                    type="text"
+                    class="form-control validate "
+                    required
+                  />
+          </div>
+          <div class="tm-product-img-dummy mx-auto">
+            <i
+              class="fas fa-cloud-upload-alt tm-upload-icon"
+              onclick="document.getElementById('fileInput').click();"
+            ></i>
+          </div>
+          <div class="form-group mt-3">
+            <label for="exampleInputPassword1" class="form-label">photo</label>
+            <input
+              type="file"
+              class="form-control"
+              name="photo"
+              multiple
+            
+            />
+               </div>
+
+          <div class="form-group dropdown mt-4">
+            <button type="button" class="btn btn-light" data-toggle="dropdown">
+              Categories
+              <select name="category">
+                <% data.forEach(product => { %>
+                <option value="<%=product.category , product._id %>">
+                  <%= product.category %>
+                </option>
+                <%});%>
+              </select>
+            </button>
+          </div>
+
+          <button type="submit" class="btn btn-primary mt-5">
+            Add Product
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Form End -->
+
+            
+<script>
+  setTimeout(() => {
+
+      document.getElementById('msg').style.display="none"
+      
+  }, 3000);
+</script>
+
+<%- include('footer') %>

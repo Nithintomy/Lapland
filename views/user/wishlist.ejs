@@ -1,0 +1,86 @@
+<%- include('header') %>
+
+    
+
+    <section class="ftco-section ftco-cart">
+			<div class="container">
+				<div class="row">
+    			<div class="col-md-12 ftco-animate">
+    				<div class="cart-list">
+	    				<table class="table">
+							<thead class="thead-primary">
+							  <tr class="text-center">
+								
+								<th>Product List</th>
+								<th>Product Details</th>
+								<th>Price</th>
+								<th>Add To Cart</th>
+								<th>&nbsp;</th>
+							
+							  </tr>
+							</thead>
+							<tbody>
+							  <% if (wishlist && wishlist.products.length > 0) { %>
+								<% wishlist.products.forEach(function(product) { %>
+								  <tr class="text-center">
+									
+									<td class="image-prod">
+									  <div class="img" style="background-image: url('<%= product.photo[0] %>');"></div>
+									</td>
+									<td class="product-name">
+									  <h3><%= product.name %></h3>
+									  <p><%- product.details %></p>
+									</td>
+									<td class="price">₹ <%= product.price %></td>
+									<td>
+										<form action="/addtocart/<%= product._id %>" method="post">
+											<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+											 <button type="submit" class="btn btn-transparent shadow" style="width: 50px;"> <span><i class="ion-ios-cart"></i></span></button>
+											</a>
+										  </form>
+							
+							
+								</td>
+
+								<td class="product-remove"><a href="/deleteWishlist/<%=product._id%>"><span class="ion-ios-close"></span></a></td>
+									<% var total = product.quantity * product.price %>
+								
+								  </tr>
+								<% }) %>
+							  <% } else { %>
+								<tr>
+								  <td colspan="6">No products in wishlist</td>
+								</tr>
+							  <% } %>
+							</tbody>
+						  </table>
+						  
+			
+					  </div>
+    			</div>
+    		</div>
+			</div>
+		</section>
+
+		<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+      <div class="container py-4">
+        <div class="row d-flex justify-content-center py-5">
+          <div class="col-md-6">
+          	<h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
+          	<span>Get e-mail updates about our latest shops and special offers</span>
+          </div>
+          <div class="col-md-6 d-flex align-items-center">
+            <form action="#" class="subscribe-form">
+              <div class="form-group d-flex">
+                <input type="text" class="form-control" placeholder="Enter email address">
+                <input type="submit" value="Subscribe" class="submit px-3">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+   
+
+
+	<%- include('footer') %>

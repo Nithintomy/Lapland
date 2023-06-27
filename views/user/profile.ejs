@@ -1,0 +1,532 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Lap Land Ecommerce</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/user/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/user/css/animate.css">
+    
+    <link rel="stylesheet" href="/user/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/user/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/user/css/aos.css">
+
+    <link rel="stylesheet" href="/user/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/user/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/user/css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="/user/css/flaticon.css">
+    <link rel="stylesheet" href="/user/css/icomoon.css">
+    <link rel="stylesheet" href="/user/css/style.css">
+	<link rel="stylesheet" href="/public/user/css/addressShow.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+
+	<!-- Include jQuery and Bootstrap JS -->
+
+
+ 
+
+  </head>
+  <body class="goto-here">
+		
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index">Lap Land</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+    
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active"><a href="/index" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown04">
+                <a class="dropdown-item" href="/shop">Shop</a>
+                <a class="dropdown-item" href="/wishlist">Wishlist</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+            <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+    
+            <% if (locals.User) { %>
+            <% if (User.isLogedin) { %>
+            <li class="nav-item"><a href="/order/<%= User._id %>" class="nav-link">Orders</a></li>
+            <% } %>
+            <li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+            <% } else { %>
+            <li class="nav-item cta cta-colored"><a href="/login" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+            <% } %>
+    
+            <% if (locals.User) { %>
+            <% if (User.isLogedin) { %>
+            <li class="nav-item"><a href="/profile/<%-User._id%>"><i class="fa-regular fa-user"></i></a></li>
+            <form action="/log_out/<%= User._id%>" method="post">
+              <li><button type="submit" class="btn log_out mt-3 ml-3">Logout</button></li>
+            </form>
+            <% } %>
+            <% } else { %>
+            <li class="nav-item"><a href="/login" class="btn">Sign In</a></li>
+            <% } %>
+          </ul>
+        </div>
+        <!-- sign in -->
+        <div class="sign_in">
+        </div>
+        <!-- //sign in -->
+      </div>
+    </nav>
+    <!-- END nav -->
+    
+
+
+	<% if(locals.message) { %>
+		<div id="msg" class="alert alert-success"><%- locals.message -%></div>
+		<%}%>
+	<% if(locals.msg) { %>
+		<div id="msg" class="alert alert-success"><%- locals.msg -%></div>
+		<%}%>
+  <style>
+    body{
+    margin-top:20px;
+    color: #1a202c;
+    text-align: left;
+    background-color: #e2e8f0;    
+}
+.main-body {
+    padding: 15px;
+}
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
+.gutters-sm {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+.gutters-sm>.col, .gutters-sm>[class*=col-] {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+.mb-3, .my-3 {
+    margin-bottom: 1rem!important;
+}
+
+.bg-gray-300 {
+    background-color: #e2e8f0;
+}
+.h-100 {
+    height: 100%!important;
+}
+.shadow-none {
+    box-shadow: none!important;
+}
+  </style>
+  
+
+
+  <div class="container">
+    <div class="main-body">
+   
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
+              <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+            </ol>
+          </nav>
+          <!-- /Breadcrumb -->
+    
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4><%= User.name %></h4>
+                      <p class="text-secondary mb-1"><%= User.email %> </p>
+                      <p class="text-muted font-size-sm"><%= User.phone %></p>
+                     
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-3">
+                <ul class="list-group list-group-flush ">
+                  <li class="list-group-item d-flex justify-content-center align-items-center flex-wrap p-4">
+                  <a href="/order/<%= User._id %>"><h6 class="mb-0 text-warning ">Orders</h6></a> 
+                   
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0">Wallet</h6>
+                    <% if (wallet && wallet.balance === null) { %>
+                      <span class="text-danger">0</span>
+                    <% } else if (wallet) { %>
+                      <span class="text-danger"><%= wallet.balance %></span>
+                    <% } %>
+                  </li>
+                  
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0">Contact</h6>
+                    <span class="text-secondary"><%= User.phone %></span>
+                  </li>
+                  
+                
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+             
+                <div class="card-body">
+                 
+                  <div class="row">
+                    
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Full Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <%= User.name %>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <%= User.email %>
+                     
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Phone</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <%= User.phone %>
+                    </div>
+                  </div>
+                  <hr>
+                 
+                 
+                 
+                </div>
+              </div>
+
+             
+              <div class="row body bg-white ml-1 ">
+              
+                <div class="col-md-8 mb-5 ">
+                    <h2 class="h3 mb-3 mt-2 text-black">My Address </h2>
+                   
+                    <div class="p-lg-5 border">
+                      <% data.forEach((address, index) => { %>
+                      <div class="border p-3 mb-3">
+                        <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank">Address - <%= index + 1 %> </a></h3>
+                        
+                        <div class="collapse" id="collapsebank">
+                          <div class="py-2">
+                            <p class="mb-0">
+                              <%= address.name %>,
+                                <%= address.phone %>,<br>
+                                <%= address.address %>,
+                                <%= address.pincode %>,<br>
+                                <%= address.email %>
+                            </p>
+                          </div>
+                        </div>
+                        <div class="d-flex"  >
+                           <button type="submit" id="collapsebank"  data-toggle="modal" data-target="#exampleModalLong<%= address._id %>"  class="collapse  btn-sm  me-3">Edit</button> 
+  
+                          <a href="/deleteaddress/<%= address._id %>" > 
+                            <button  id="collapsebank"  address-id="<%= address._id %>" class="delete-address-btn collapse  btn-sm ml-2 ">Delete</button>
+                          </a> 
+  
+                        </div>
+  
+                        <!-- Address Modal -->
+                        <div class="modal fade" id="exampleModalLong<%= address._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Edit Your Address</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="p-3 p-lg-5 border">
+                                  <form action="/edit_address/<%= address._id %>" class="edit-address-form" address-id="<%= address._id %>" method="post">
+                    
+                    
+                                    <% if(typeof message !== 'undefined'){
+                                          %>
+                                          <div id="msg" class="col-md-12 alter alert-danger">
+                                            <p class="fw-semibold text-center"> <%= message %> </p>
+                                          </div>
+                                          <%
+                                        }
+                    
+                                      %>
+                    
+                                  <div class="form-group row">
+                                    <div class="col-md-12">
+                                      <label for="c_fname" class="text-black"> Name <span class="text-danger">*</span></label>
+                                     
+                                      <input name="name" value="<%= address.name %>"  type="text" class="form-control" id="name<%= address._id %>" required/>
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="email" class="text-black">Email <span class="text-danger">*</span></label>
+                                    <input name="email" value="<%= address.email %>" type="email" id="email <%= address._id %>" class="form-control" required>
+                                  </div>
+                    
+                                  <div class="form-group">
+                                    <label for="c_country" class="text-black">City<span class="text-danger">*</span></label>
+                                    <input name="city" value="<%= address.city %>" type="text" id="city <%= address._id %>" class="form-control" required>
+                    
+                                  </div>
+                                  <div class="form-group row">
+                                    <div class="col-md-12 mb-3">
+                                      <label for="address" class="text-black">Address <span class="text-danger">*</span></label>
+                                      <input name="address" value="<%= address.address %>" type="text" class="form-control  py-5" id="address<%= address._id %>" required>
+                                    </div>
+                                  </div>
+                    
+                                  <div class="form-group row">
+                                    <div class="col-md-12">
+                                      <label for="c_postal_zip" class="text-black">Pincode<span class="text-danger">*</span></label>
+                                      <input name="pincode" value="<%= address.pincode %>" type="text" class="form-control" id="c_postal_zip<%= address._id %>" required>
+                                    </div>
+                                  </div>
+                    
+                                  <div class="form-group row mb-5">
+                                    <div class="col-md-12">
+                                      <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+                                      <input name="phone" value="<%= address.phone %>" type="text" class="form-control" id="c_phone<%= address._id %>" required>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer form-group">
+                                <button type="submit" class="">Save changes</button>
+                              </div>
+                            </form>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /Address Modal -->
+          
+                        
+                      </div>
+                      <% }) %>
+                    </div>
+                  </div>
+               </div>
+      
+
+
+            </div>
+
+
+
+
+
+
+
+
+          </div>
+      
+        </div>
+      </div>
+      <br>
+      <br>
+              <footer class="ftco-footer ftco-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="mouse">
+                                  <a href="#" class="mouse-icon">
+                                      <div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
+                                  </a>
+                              </div>
+                    </div>
+                  <div class="row mb-5">
+                    <div class="col-md">
+                      <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Lap Land</h2>
+                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                          <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                          <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                          <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="ftco-footer-widget mb-4 ml-md-5">
+                        <h2 class="ftco-heading-2">Menu</h2>
+                        <ul class="list-unstyled">
+                          <li><a href="#" class="py-2 d-block">Shop</a></li>
+                          <li><a href="#" class="py-2 d-block">About</a></li>
+                          <li><a href="#" class="py-2 d-block">Journal</a></li>
+                          <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                       <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Help</h2>
+                        <div class="d-flex">
+                            <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
+                              <li><a href="#" class="py-2 d-block">Shipping Information</a></li>
+                              <li><a href="#" class="py-2 d-block">Returns &amp; Exchange</a></li>
+                              <li><a href="#" class="py-2 d-block">Terms &amp; Conditions</a></li>
+                              <li><a href="#" class="py-2 d-block">Privacy Policy</a></li>
+                            </ul>
+                            <ul class="list-unstyled">
+                              <li><a href="#" class="py-2 d-block">FAQs</a></li>
+                              <li><a href="#" class="py-2 d-block">Contact</a></li>
+                            </ul>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="ftco-footer-widget mb-4">
+                          <h2 class="ftco-heading-2">Have a Questions?</h2>
+                          <div class="block-23 mb-3">
+                            <ul>
+                              <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                              <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                              <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                            </ul>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              
+              </footer>
+              
+            
+            <!-- loader -->
+            <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+           
+            
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="/user/js/jquery.min.js"></script>
+            <script src="/user/js/jquery-migrate-3.0.1.min.js"></script>
+            <script src="/user/js/popper.min.js"></script>
+            <script src="/user/js/bootstrap.min.js"></script>
+            <script src="/user/js/jquery.easing.1.3.js"></script>
+            <script src="/user/js/jquery.waypoints.min.js"></script>
+            <script src="/user/js/jquery.stellar.min.js"></script>
+            <script src="/user/js/owl.carousel.min.js"></script>
+            <script src="/user/js/jquery.magnific-popup.min.js"></script>
+            <script src="/user/js/aos.js"></script>
+            <script src="/user/js/jquery.animateNumber.min.js"></script>
+            <script src="/user/js/bootstrap-datepicker.js"></script>
+            <script src="/user/js/scrollax.min.js"></script>
+            <script src="/user/js/google-map.js"></script>
+            <script src="/user/js/main.js"></script>
+            
+            
+            
+              
+            </body>
+            </html>
+
+             <script>
+              $(document).ready(function(){
+                //edit modal
+                $('#editProfileBtn').click(function(){
+                  $('#editProfileModal').modal('show');
+                });
+                //Handle form submission for updating the profile
+                $('#editProfileForm').submit(function(e){
+                  e.preventDefault();
+                  const fullName = $('#fullName').val();
+                  const email = $('#email').val();
+                  const phone = $('#phone').val();
+                  const address = $('#address').val();
+                  const pincode = $('#pincode').val();
+                  const city = $('#city').val();
+
+                  //make an ajax request to update the profile details
+                  $.ajax({
+                    url:'/updateProfile',
+                    method:'POST',
+                    data:{
+                      fullName:fullName,
+                      email:email,
+                      phone:phone,
+                      address:address,
+                      pincode:pincode,
+                      city:city
+                    },
+                    success:function(data){
+                      if(data.success){
+                         // Update the profile details on the page
+                    $('.text-secondary').filter(':contains("Email")').text(email);
+                    $('.text-secondary').filter(':contains("Phone")').text(phone);
+                    $('.text-secondary').filter(':contains("Address")').text(address);
+                    $('.text-secondary').filter(':contains("Pincode")').text(pincode);
+                    $('.text-secondary').filter(':contains("City")').text(city);
+
+                    // Hide the modal
+                    $('#editProfileModal').modal('hide');
+
+                     }else{
+                      console.log('Error while Updating profile');
+                     }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('Error:', textStatus, errorThrown);
+                    }
+                  });
+                });
+
+              });
+
+            </script>

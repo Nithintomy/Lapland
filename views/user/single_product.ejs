@@ -1,0 +1,276 @@
+<%- include('header') %>
+
+
+<section class="ftco-section">
+
+ 
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mb-5 ftco-animate">
+        <a href="#" class="image">
+          <img id="mainImage" src="/<%= product.photo[0] %>" class="img-fluid img-zoom" alt="Colorlib Template" data-zoom-image="/<%= product.photo[0] %>">
+        </a>
+        <div class="row mt-4">
+          <div class="col-lg-4 mb-4 ftco-animate">
+            <a href="#" class="sub-photo-link" data-photo="/<%= product.photo[0] %>">
+              <img src="/<%= product.photo[0] %>" class="img-fluid sub-photo" alt="Sub Photo 1">
+            </a>
+          </div>
+          <div class="col-lg-4 mb-4 ftco-animate">
+            <a href="#" class="sub-photo-link" data-photo="/<%= product.photo[1] %>">
+              <img src="/<%= product.photo[1] %>" class="img-fluid sub-photo" alt="Sub Photo 2">
+            </a>
+          </div>
+          <div class="col-lg-4 mb-4 ftco-animate">
+            <a href="#" class="sub-photo-link" data-photo="/<%= product.photo[2] %>">
+              <img src="/<%= product.photo[2] %>" class="img-fluid sub-photo" alt="Sub Photo 3">
+            </a>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="col-lg-6 product-details pl-md-5 ftco-animate">
+        <h3><%= product.name %></h3>
+        <div class="rating d-flex">
+          <p class="text-left mr-4">
+            <a href="#" class="mr-2">5.0</a>
+            <a href="#"><span class="ion-ios-star-outline"></span></a>
+            <a href="#"><span class="ion-ios-star-outline"></span></a>
+            <a href="#"><span class="ion-ios-star-outline"></span></a>
+            <a href="#"><span class="ion-ios-star-outline"></span></a>
+            <a href="#"><span class="ion-ios-star-outline"></span></a>
+          </p>
+          <p class="text-left mr-4">
+            <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
+          </p>
+          <p class="text-left">
+            <a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
+          </p>
+        </div>
+        <p class="price"><span>₹ <%= product.price %></span></p>
+        <p><%-product.details%> </p>
+        <div class="row mt-4">
+        
+<div class="w-100"></div>
+
+<div class="input-group col-md-6 d-flex mb-3">
+  
+  <span class="input-group-btn mr-2">
+    <button type="button" class="quantity-left-minus btn" data-type="minus" id="decrement_<%= product._id %>">
+      <i class="ion-ios-remove"></i>
+      </button>
+  </span>
+  <input type="text" id="quantity_<%= product._id %>" name="quantity" class="quantity form-control input-number" value="1" min="1" max="<%= product.quantity %>" readonly>
+  <span class="input-group-btn mr-2">
+    <button type="button" class="quantity-right-plus btn" data-type="plus" id="increment_<%= product._id %>">
+      <i class="ion-ios-add"></i>
+      </button>
+  </span>
+
+</div>
+</div>
+
+<% if (product.quantity > 0) { %>
+  <% if (product.quantity <= 5) { %>
+    <p>Only <%= product.quantity %> left</p>
+  <% } %>
+  <% if (locals.User) { %>
+    <form action="/addToCart/<%= product._id %>" method="post">
+      <button class="btn btn--green pb-3 py-3 px-5" type="submit">Add to Cart</button>
+    </form>
+  <% } else { %>
+    <form action="/login" method="get">
+      <button class="btn btn--green pb-3 py-3 px-5" type="submit">Add to Cart</button>
+    </form>
+  <% } %>
+<% } else { %>
+  <p>Out of Stock</p>
+<% } %>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+<section class="ftco-section">
+<div class="container">
+  <div class="row justify-content-center mb-3 pb-3">
+    <div class="col-md-12 heading-section text-center ftco-animate">
+      <span class="subheading">Products</span>
+      <h2 class="mb-4">Related Products</h2>
+      <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+    </div>
+  </div>
+</div>
+<div class="container">
+
+  <div class="row">
+    <% products.forEach(function(product) { %>
+      <div class="col-md-6 col-lg-3 ftco-animate">
+    
+        <div class="product">
+        
+          <a href="/single_product/<%= product._id %>" class="img-prod"><img class="img-fluid" src="/<%= product.photo[0] %>" alt="Colorlib Template">
+            <span class="status">30%</span>
+            <div class="overlay"></div>
+          </a>
+          <div class="text py-3 pb-4 px-3 text-center">
+            <h3><a href="#"><%= product.name %></a></h3>
+            <div class="d-flex">
+              <div class="pricing">
+                <p class="price"><span class="mr-2 price-dc">$120.00</span><span class="price-sale"><%= product.price %></span></p>
+              </div>
+            </div>
+            <div class="bottom-area d-flex px-3">
+              <div class="m-auto d-flex">
+                <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                  <span><i class="ion-ios-menu"></i></span>
+                </a>
+                <% if (locals.User) { %>
+                <form action="/addtocart/<%= product._id %>" method="post">
+                <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                  <span><i class="ion-ios-cart"></i></span>
+                </a>
+              </form>
+              <% } else { %>
+                <button type="button" ONCLICK="alert('you need to Login first!')" ><i class="ion-ios-cart"></i></button>
+                <% } %>	
+                <a href="#" class="heart d-flex justify-content-center align-items-center ">
+                  <span><i class="ion-ios-heart"></i></span>
+                </a>
+              </div>
+            </div>
+          </div>
+      
+        </div>
+       
+      </div>
+      <% }); %>
+      
+      
+
+
+    </div>
+</div>
+</section>
+
+<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+<div class="container py-4">
+  <div class="row d-flex justify-content-center py-5">
+    <div class="col-md-6">
+      <h2 style="font-size: 22px;" class="mb-0">Subscribe to our Newsletter</h2>
+      <span>Get e-mail updates about our latest shops and special offers</span>
+    </div>
+    <div class="col-md-6 d-flex align-items-center">
+      <form action="#" class="subscribe-form">
+        <div class="form-group d-flex">
+          <input type="text" class="form-control" placeholder="Enter email address">
+          <input type="submit" value="Subscribe" class="submit px-3">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</section>
+
+
+
+<script>
+  $(document).ready(function() {
+    // Image changing
+    $('.sub-photo-link').on('click', function(event) {
+      event.preventDefault();
+      var photoUrl = $(this).data('photo');
+      $('#mainImage').attr('src', photoUrl).data('zoom-image', photoUrl);
+      // Reinitialize elevateZoom on the main image
+      $('.img-zoom').elevateZoom();
+    });
+
+    // Image zooming
+    $('.img-zoom').elevateZoom();
+  });
+
+
+  $(document).ready(function() {
+const setSubtotal = () => {
+  const itemTotalElements = $('.item-total');
+  let subtotal = 0;
+
+  itemTotalElements.each(function() {
+    const itemTotalValue = parseFloat($(this).text().replace(/[^0-9.-]+/g, ''));
+    subtotal += itemTotalValue;
+  });
+
+  const subtotalElement = $('#subtotal');
+  const totalSubtotalElement = $('#total-subtotal');
+
+  subtotalElement.text(`₹ ${subtotal.toFixed(2)}`);
+  totalSubtotalElement.text(`₹ ${subtotal.toFixed(2)}`);
+};
+
+setSubtotal();
+
+$('.quantity-left-minus').click(function() {
+  const cartItemId = $(this).attr('id').split('_')[1];
+  decrementQuantity(cartItemId);
+});
+
+$('.quantity-right-plus').click(function() {
+  const cartId = $(this).attr('id').split('_')[1];
+  incrementQuantity(cartId);
+});
+
+function incrementQuantity(cartId) {
+  $.ajax({
+    url: "/incrementQuantity",
+    method: "POST",
+    data: { cartId: cartId },
+    success: function(data) {
+      if (data.success) {
+        $(`#product-total-price-${cartId}`).text(`₹ ${data.total}`);
+        $(`#quantity_${cartId}`).val(data.quantity);
+        setSubtotal();
+      } else {
+        console.log('Error while updating');
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log('Error:', textStatus, errorThrown);
+    }
+  });
+}
+
+function decrementQuantity(cartItemId) {
+  var currentQuantity = parseInt($(`#quantity_${cartItemId}`).val());
+  if (currentQuantity > 1) {
+    $.ajax({
+      url: "/decrementQuantity",
+      method: "post",
+      data: { cartItemId: cartItemId },
+      success: function(data) {
+        $(`#product-total-price-${cartItemId}`).text(`₹ ${data.total}`);
+        $(`#quantity_${cartItemId}`).val(data.quantity);
+        setSubtotal();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log('Error:', textStatus, errorThrown);
+      }
+    });
+  } else {
+    $(`#quantity_${cartItemId}`).val(1);
+  }
+}
+});
+
+
+
+</script>
+
+
+</section>
+
+<%- include('footer') %>

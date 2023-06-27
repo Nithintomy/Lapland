@@ -1,0 +1,53 @@
+<%- include('header') %>
+
+          <!-- Banner Details Start -->
+<div class="container-fluid pt-4 px-4">
+  <div class="row g-4">
+    <div class="col-12">
+      <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4">Banner Details</h6>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">No:</th>
+                <th scope="col">Title</th>
+                <th scope="col">Sub Title</th>
+                <th scope="col">URL</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Image</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% banner_data.forEach(function(banner, index) { %>
+              <tr>
+                <td><%= index+1 %></td>
+                <td><%= banner.title %></td>
+                <td><%= banner.subtitle %></td>
+                <td><%= banner.link %></td>
+                <td><%= banner.createdAt %></td>
+                <td>
+                  <img class="img-thumbnail" width="100px" src="<%= banner.image %>" />
+                </td>
+                <td>
+                  <a href="/edit_banner/<%= banner._id %>"class="btn border-shadow update"> <span class="text-gradient" ><i class="fas fa-pencil-alt"></i></span> </a>
+                  <a href="/delete_banner/<%= banner._id %>" class="btn border-shadow delete">
+                    <span class="text-gradient"><i class="fas fa-times"></i></span>
+                  </a>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Banner Details End -->
+
+           
+
+
+   <%- include('footer') %>

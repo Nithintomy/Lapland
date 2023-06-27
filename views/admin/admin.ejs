@@ -1,0 +1,203 @@
+<%- include('header') %>
+
+
+           
+
+
+           <!-- Sales Chart Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+      <div class="col-sm-4 col-sm-2">
+        <div class="bg-secondary text-center rounded p-4">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Sales & Revenue</h6>
+            <a href="">Show All</a>
+          </div>
+          <canvas id="pie-chart"></canvas>
+        </div>
+      </div>
+      <div class="col-sm-4 col-sm-2" >
+        <div class="bg-secondary text-center linechart rounded p-4" style="height: 433px">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Sales Graph</h6>
+            <a href="">Show All</a>
+          </div>
+          <canvas id="line-chart"></canvas>
+        </div>
+      </div>
+      <div class="col-sm-4 col-sm-2">
+        <div class="bg-secondary text-center rounded p-4"  style="height: 433px">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Sales Chart</h6>
+            <a href="">Show All</a>
+          </div>
+          <canvas id="salesChart"></canvas>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <!-- Sales Chart End -->
+  <div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        
+
+        
+       
+    </div>
+</div>
+  
+
+
+          
+
+
+            <!-- Widgets Start -->
+           
+            <!-- Widgets End -->
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <span id="totalsales" hidden><%= totalsales %>  </span>
+    <span id="ordershipped" hidden><%= Ordershipped %>  </span>
+    <span id="orderpending" hidden><%= Orderpending %>  </span>
+    <span id="ordercancelled" hidden><%= Ordercancelled %>  </span>
+    <span id="OrderReturn" hidden><%= OrderReturn %>  </span>
+
+    <span id="monthlysales" hidden><%= JSON.stringify(salesCountByMonth) %></span>
+
+
+    <script>
+        var salesCountByMonth = JSON.parse(document.getElementById('monthlysales').textContent);
+        const salesCountByMonthObj = {
+            Jan: 0,
+            Feb: 0,
+            March: 0,
+            April: 0,
+            May: 0,
+            June: 0
+            };
+            
+            
+            salesCountByMonth.forEach((monthData) => {
+            const { month, count } = monthData;
+            switch (month) {
+                case 1:
+                salesCountByMonthObj.Jan = count;
+                break;
+                case 2:
+                salesCountByMonthObj.Feb = count;
+                break;
+                case 3:
+                salesCountByMonthObj.March = count;
+                break;
+                case 4:
+                salesCountByMonthObj.April = count;
+                break;
+                case 5:
+                salesCountByMonthObj.May = count;
+                break;
+                case 6:
+                salesCountByMonthObj.June = count;
+                break;
+                default:
+                break;
+            }
+            });
+            
+            
+            const salesCountJan = salesCountByMonthObj.Jan;
+            const salesCountFeb = salesCountByMonthObj.Feb;
+            const salesCountMarch = salesCountByMonthObj.March;
+            const salesCountApril = salesCountByMonthObj.April;
+            const salesCountMay = salesCountByMonthObj.May;
+            const salesCountJune = salesCountByMonthObj.June;
+            // Access the chart labels and data passed from the route
+
+        // Create the chart
+        new Chart(document.getElementById('line-chart'), {
+        type: 'line',
+        data: {
+            labels: ["jan","feb","march","april","may","june"],
+            datasets: [{
+            label: 'Sales',
+            data: [ salesCountJan,salesCountFeb,salesCountMarch,salesCountApril,salesCountMay,salesCountJune],
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        }
+        });
+
+        // second
+
+        let totalsales=Number(document.getElementById('totalsales').innerHTML)
+        let ordershipped=Number(document.getElementById('ordershipped').innerHTML)
+        let orderpending=Number(document.getElementById('orderpending').innerHTML)
+        let ordercancelled=Number(document.getElementById('ordercancelled').innerHTML)
+        let OrderReturn=Number(document.getElementById('OrderReturn').innerHTML)
+        console.log(totalsales, ordershipped, orderpending, ordercancelled,OrderReturn)
+
+
+        new Chart(document.getElementById('pie-chart'), {
+        type: 'pie',
+        data: {
+            labels: ['Orders Delivered', 'Orders Shipped', 'Orders Pending', 'Orders Cancelled','Order Return'],
+            datasets: [{
+                label: 'Sales',
+                data: [totalsales, ordershipped, orderpending, ordercancelled,OrderReturn],
+                backgroundColor: [
+                    "rgba(149, 46, 49, 0.7)", 
+                    "rgba(40, 85, 103, 0.7)", 
+                    "rgba(126, 100, 48, 0.7)", 
+                    "rgba(37, 91, 76, 0.7)",
+                    "rgba(76, 42, 98, 0.7)" 
+                ],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        }
+        });
+
+            // Access the chart labels and data passed from the route
+        const chartLabels = JSON.parse('<%- chartLabels %>')
+        const chartData = JSON.parse('<%- chartData %>')
+
+        // Create the chart
+        new Chart(document.getElementById('salesChart'), {
+        type: 'bar',
+        data: {
+            labels: chartLabels,
+            datasets: [{
+            label: 'Revenue',
+            data: chartData,
+            backgroundColor: 'rgba(50, 150, 150, 0.4)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        }
+        });
+    </script>
+
+
+            <%- include('footer') %>

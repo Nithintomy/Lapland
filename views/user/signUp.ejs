@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>Sign Up Page</title>
+
+    <!-- Icons font CSS-->
+    <link href="/user/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="/user/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="/user/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="/user/css/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="/user/css/signup.css" rel="stylesheet" media="all">
+    <!-- Jquery JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+  <div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
+    <div class="wrapper wrapper--w780">
+      <div class="card card-3">
+        <div class="card-heading"></div>
+        <div class="card-body">
+          <h2 class="title">Sign Up</h2>
+          <form class="row contact_form" action="/api/users" method="post" onsubmit="return  validateForm()" >
+            <% if (locals.message) { %>
+            <div id="msg" class="alert alert-danger">
+              <%- locals.message -%>
+            </div>
+            <% } %>
+
+            <div class="input-group">
+              <input class="input--style-3" type="text" placeholder="Name" name="name">
+            </div>
+
+            <div class="input-group">
+              <input class="input--style-3" type="email" placeholder="Email" name="email">
+            </div>
+
+            <div class="input-group">
+              <input type="tel" class="input--style-3" id="phone" name="phone" value="" placeholder="Phone" required>
+              <button type="button" class="btn_3" style="background-color: blueviolet;" onclick="sendOTP()">Send OTP</button>
+            </div>
+
+            <div id="otpSection" style="display: none;">
+              <div class="input-group">
+                <input type="tel" class="input--style-3" id="otp" name="otp" value="" placeholder="Enter OTP" required>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <input class="input--style-3" type="password" placeholder="Password" name="password" required>
+            </div>
+
+            <div class="input-group">
+              <input class="input--style-3" type="password" placeholder="Confirm Password" name="confirmPassword" required>
+            </div>
+
+            <div class="p-t-10">
+              <button class="btn btn--pill btn--green" type="submit">Submit</button>
+            </div>
+
+            <div>
+              <p class="sub-btn">Already have an Account</p>
+              <a href="/login" class="sub-btn">Login</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById("msg").style.display = "none";
+    }, 1000);
+
+    function sendOTP() {
+      var phone = document.getElementById("phone").value;
+      console.log(phone);
+      if (phone === "") {
+        alert("Please enter a phone number.");
+        return;
+      }
+
+      document.getElementById("otpSection").style.display = "block";
+
+      fetch("/OTPSend", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ phone: phone }),
+        })
+        .then(function(response) {
+          if (response.ok) {
+            alert("OTP sent successfully.");
+          } else {
+            alert("Failed to send OTP. Please try again.");
+          }
+        })
+        .catch(function(error) {
+          console.log("Error:", error);
+          alert("An error occurred. Please try again.");
+        });
+    }
+
+    function validateForm() {
+      var name = document.forms["login_form"]["name"].value;
+      var email = document.forms["login_form"]["email"].value;
+      var phone = document.forms["login_form"]["phone"].value;
+      var password = document.forms["login_form"]["password"].value;
+      var confirmPassword = document.forms["login_form"]["confirmPassword"].value;
+
+      if (name == "" || email == "" || phone == "" || password == "" || confirmPassword == "") {
+        alert("Please fill in all fields.");
+        return false;
+      }
+
+      // Validate email
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("Invalid email address.");
+        return false;
+      }
+
+      // Validate name
+      var nameRegex = /^[A-Za-z\s]+$/;
+      if (!nameRegex.test(name)) {
+        alert("Name should only contain letters and spaces.");
+        return false;
+      }
+
+      // Validate phone
+      var phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phone)) {
+        alert("Phone should only contain numbers and be 10 digits.");
+        return false;
+      }
+
+      // Validate password
+      if (password.length < 8) {
+        alert("Password should be at least 8 characters long.");
+        return false;
+      }
+
+      // Validate confirm password
+      if (password != confirmPassword) {
+        alert("Passwords do not match.");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+
+  <!-- Jquery JS-->
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+  <!-- Vendor JS-->
+  <script src="/user/vendor/select2/select2.min.js "></script>
+  <script src="/user/js/moment.min.js"></script>
+
+
+  <script src="/user/vendor/datepicker/daterangepicker.js"></script>
+
+  <!-- Main JS-->
+  <script src="/user/js/global.js"></script>
+</body>
+
+
+</html>

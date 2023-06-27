@@ -1,0 +1,46 @@
+<%- include('header') %>
+  
+   <!-- Form Start -->
+   <div class="container-fluid pt-4 px-4">
+    <div class="row g-4 align-items-center justify-content-center mt-5">
+      <div class="col-sm-12 col-xl-6">
+        <div class="bg-secondary rounded h-100 p-4">
+          <h6 class="mb-4">Add Category</h6>
+          <div>
+            <% if(locals.message) { %>
+              <div id="msg" class="alert alert-success"><%- locals.message -%></div>
+              <%}%>
+          </div>
+          <form
+            action="/add_category"
+            id="update_category"
+            name="basic"
+            method="post"
+          >
+            <div class="mb-3">
+              <label for="category" class="form-label">Category</label>
+              <input
+                type="text"
+                class="form-control"
+                id="category"
+                name="category"
+               
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Add Category</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Form End -->
+  
+  <script>
+    setTimeout(() => {
+
+        document.getElementById('msg').style.display="none"
+        
+    }, 3000);
+</script>
+
+  <%- include('footer') %>

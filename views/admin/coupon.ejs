@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>DarkPan - Bootstrap 5 Admin Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css1/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/css1/style.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+   
+    <!-- Add these lines before the closing </body> tag -->
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
+
+<!-- SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+
+    
+</head>
+
+<body>
+    <div class="container-fluid position-relative d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-secondary navbar-dark">
+                <a href="/admin" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>ADMIN</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="/img/" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">Nithin Tomy</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="/admin" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Product side</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/product" class="dropdown-item">Product List</a>
+                            <a href="/add_product_page" class="dropdown-item">Add Product</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Category</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/category" class="dropdown-item">Category List</a>
+                            <a href="/add_category" class="dropdown-item">Add Category</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Coupon</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/coupon" class="dropdown-item">Coupon List</a>
+                            <a href="/add_coupon_page" class="dropdown-item">Add Coupon</a>
+                        </div>
+                    </div>
+
+
+                    <a href="/user" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Users List</a>
+                    <a href="/order" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Order List</a>
+                    <a href="/chart" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
+                    
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+                <a href="/admin" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <form class="d-none d-md-flex ms-4">
+                    <input class="form-control bg-dark border-0" type="search" placeholder="Search">
+                </form>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fa fa-envelope me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex">Message</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="/img/testimonial-1.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Juliet Applied for Return</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="/img/testimonial-2.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Honk Ordered Acer 7</h6>
+                                        <small>5 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Nithin cancelled Order</h6>
+                                        <small>2 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all message</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fa fa-bell me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex">Notificatin</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Profile updated</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">New user added</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Password changed</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all notifications</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="/img" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">Nithin Tomy</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="/logout" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+
+ 
+
+
+            <div class="row tm-content-row m-2 mt-3">
+                <div class="col-sm-12 col-md-12 col-lg-8 col-xl-12 tm-block-col">
+                    <div class="tm-bg-primary tm-block tm-block-products">
+                        <div class="tm-product-table-container">
+                            <div class="row mb-3">
+                                <div class="col-sm-12 col-md-6">
+
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+
+                                </div>
+                            </div>
+                            <table class="table table-hover tm-table-small tm-product-table">
+                                <a href="/add_coupon_page">
+                                    <button type="button" class="btn btn-success mb-5 ">Add Coupon</button>
+                                </a>
+
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Sl No</th>
+                                        <th scope="col">Brand</th>
+                                        <th scope="col">Code</th>
+                                        <th scope="col">Discount</th>
+                                        <th scope="col">Expiry Date</th>
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Activate/Deactivate</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% coupon_data.forEach(function(coupon, index){ %>
+                                        <tr>
+                                            <td>
+                                                <%= index+1 %>
+                                            </td>
+                                            <td>
+                                                <%= coupon.brand %>
+                                            </td>
+                                            <td>
+                                                <%= coupon.code %>
+                                            </td>
+                                            <td>
+                                                <%= coupon.discount %>
+                                            </td>
+                                            <td>
+                                                <% if (coupon.status == false) { %>
+                                                    <span class="text-danger" style="font-weight: bold;">Deactivated</span>
+                                                  <% } else if (new Date(coupon.date) < new Date()) { %>
+                                                    <span class="text-danger" style="font-weight: bold;">Expired</span>
+                                                  <% } else { %>
+                                                    <%= coupon.date?.toLocaleDateString() %>
+                                                  <% } %>
+                                                  </td>
+                                                  <td>
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_coupon<%= coupon._id %>">Edit</button>
+                                                </td>
+                                                  <td>
+                                                    <% if (coupon.status) { %>
+                                                        <a href="/deactivate_coupon/<%= coupon._id %>" class="btn btn-danger" onclick="confirmDeactivate(event); return false;">Deactivate</a>
+
+                                                    <% } else { %>
+                                                      <a href="/activate_coupon/<%= coupon._id %>" class="btn btn-success" onclick="confirmActivate(event); return false;">Activate</a>
+                                                    <% } %>
+                                                  </td>
+                                                  </tr>
+                                                  <% }) %>
+                                </tbody>
+                                
+                                
+                            </table>
+                        </div>
+                        <!-- table container -->
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        <!-- Button trigger modal -->
+
+
+
+        <!-- Button trigger modal -->
+
+
+        <!-- Modal -->
+        <% coupon_data.forEach(function(coupon){ %>
+            <div class="modal fade" id="edit_coupon<%= coupon._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" >Edit Coupon</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                            <div class="row tm-edit-product-row">
+                                <div class="col-xl-6 col-lg-6 col-md-12">
+                                    <form action="/edit_coupon/<%= coupon._id %>" method="POST" class="tm-edit-product-form">
+                                        <div class="form-group mb-3 custom-width">
+
+                                            <label for="coupon code" style="color:black">coupon code
+                                            </label>
+                                            <input id="coupon_code" name="coupon_code" value="<%= coupon.code %>"
+                                                type="text" class="form-control validate" required />
+                                        </div>
+                                        <div class="form-group mb-3 custom-width">
+                                            <label style="color:black">Expiry Date</label>
+
+                                            <input id="date" name="date" type="date" value="<%= coupon.date %>"
+                                                class="form-control validate" required />
+                                        </div>
+                                        <div class="form-group mb-3 custom-width">
+                                            <label style="color:black">Discount Amount</label>
+                                            <input id="discount" name="discount" type="text"
+                                                value="<%= coupon.discount %>" class="form-control validate" required />
+                                        </div>
+
+
+                                        <button type="submit" class="btn btn-success center-button">Edit Coupon</button>
+
+
+
+                                    </form>
+                                </div>
+
+                            </div>
+                       
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+
+                <style>
+                    .custom-width {
+                        margin-left: 30px;
+                        width: 400px;
+                        /* Adjust the width value as per your requirements */
+                    }
+
+                    .center-button {
+                        display: block;
+                        margin-left: 150px;
+                        text-align: center;
+                    }
+                </style>
+
+                <!-- Modal -->
+
+
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+                        crossorigin="anonymous"></script>
+
+
+                        <script>
+                            function confirmActivate(event) {
+                              event.preventDefault();
+                              
+                              Swal.fire({
+                                title: "Do you really want to activate the coupon?",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonText: "Yes",
+                                cancelButtonText: "No"
+                              }).then(function (result) {
+                                if (result.isConfirmed) {
+                                  window.location.href = event.target.getAttribute("href");
+                                }
+                              });
+                            }
+                          </script>
+
+                                          <script>
+                          
+                   
+  function confirmDeactivate(event) {
+    event.preventDefault();
+    
+    Swal.fire({
+      title: "Do you really want to deactivate the coupon?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No"
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        window.location.href = event.target.getAttribute("href");
+      }
+    });
+  }
+</script>
+               
+
+
+
+
+           <!-- Footer Start -->
+           <div class="container-fluid pt-4 px-4">
+            <div class="bg-secondary rounded-top p-4">
+                <div class="row">
+                    <div class="col-12 col-sm-6 text-center text-sm-start">
+                        &copy; <a href="#">LAP LAND</a>, Admin. 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+    </div>
+    <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script src="lib/chart/chart.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="/ajs/main.js"></script>
+
+<!-- Template Javascript -->
+
+</body>
+
+</html>

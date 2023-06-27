@@ -1,0 +1,82 @@
+<%- include('header') %>
+
+
+<!-- user Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+      <div class="col-12">
+        <% if(locals.msg) { %>
+        <div id="msg" class="alert alert-success"><%- locals.msg -%></div>
+        <%}%>
+        <div class="bg-secondary rounded h-100 p-4">
+          <h6 class="mb-4">User Data</h6>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+  
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Action</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+  
+              <tbody>
+                <% user_data.forEach(function(user,index) { %>
+                <tr>
+                  <td><%= index+1 %></td>
+                  <td><%= user.name %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.phone %></td>
+                  <td>
+                    <% if(user.isBlocked){ %>
+                    <a
+                      href="/unblock_user/<%= user._id %>"
+                      class="btn border-shadow update"
+                    >
+                      <span class="text-gradient"
+                        ><i class="fas fa-lock"></i
+                      ></span>
+                    </a>
+                    <% } else{ %>
+  
+                    <a
+                      href="/block_user/<%= user._id %>"
+                      class="btn border-shadow update"
+                    >
+                      <span class="text-gradient"
+                        ><i class="fas fa-unlock"></i
+                      ></span>
+                    </a>
+  
+                    <% } %>
+                  </td>
+                  <td><% if(user.isLogedin){ %>
+                    <p>Online</p>
+                    <% } else{ %>
+                      <p>Offline</p>
+                      <% } %>
+                        </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Table End -->
+  
+  <script>
+    setTimeout(() => {
+      document.getElementById("msg").style.display = "none";
+    }, 1000);
+  </script>
+  
+
+
+  <%- include('footer') %>

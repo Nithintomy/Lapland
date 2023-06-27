@@ -1,0 +1,163 @@
+<%- include('header') %>
+
+
+
+	<!-- order -->
+    <% if (locals.order_data) { %>
+    <div class="col-12">
+        <div class="bg-dark text-white orderround rounded h-100 p-4">
+            <h3 class="mb-4 text-warning">Order history</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="orderhead">
+                        <tr>
+                            <th scope="col">No:</th>
+							<th scope="col">Date</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">quantity</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">status</th>
+                            <th scope="col">Details</th>
+                            <th scope="col">Action</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody class="ordertable">
+                        <% order_data.forEach((orders,index) =>{ %>
+                        <tr>
+                            
+                            <td><%= index+1 %></td>
+
+							<td><%= orders.createdAt.toLocaleDateString() %></td>
+
+                            <td><% orders.items.forEach((items,index) =>{ %>
+
+								<%= index+1 %>. <%= items.product.name %> <br>
+							   <% }) %>
+						    </td>
+
+                            <td><% orders.items.forEach((items) =>{ %>
+
+								<%= items.quantity %> <br>
+							   <% }) %>
+						    </td>
+                            
+                            <td>₹<%= orders.total%></td>
+
+                            <td>
+								<% orders.items.forEach((items) =>{ %>
+								  <img src="/<%= items.product.photo[0] %>" class="img-thumbnail" width="60px" alt=""> <br>
+						        <% }) %>
+                            <td>
+                                <%= orders.status%>
+                            </td>
+							<td> <div>
+                                                    
+								<a type="submit" href="/order_detail/<%= orders._id %>" class="btn btn-light">Details</a>
+							</div></td>
+                            <td>
+                                <%	if (orders.status==="cancelled") {%> 
+                                    <%= orders.status%>
+                                    <%} else if(orders.status==="Delivered"){%>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Return<%=orders._id %>">
+                                            Return
+                                          </button>
+                                          <!-- Modal -->
+                                            <form action="/returnOrder/<%= orders._id %>" method="post">
+                                                <div class="modal fade" id="Return<%=orders._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        <input type="text" name="reason">
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-secondary" >Ok</button>
+                                                        
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                </form>
+                                    <% }else { %>
+                                <div>
+                                    <form action="/order_cancel/<%= orders._id %>" method="post">
+                                          <button type="submit" value="cancelled" class="btn btn-danger">Cancel</button>
+                                    </form>
+                                </div>
+                                <% } %>	
+                            </td>
+                            
+                          </tr>
+                          <% }) %>
+            
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <% } else { %>
+        <div class="container-fluid  mt-100">
+            <div class="row">
+            
+               <div class="col-md-12">
+               
+                       <div class="card">
+                   <div class="card-header">
+                   
+                   </div>
+                   <div class="card-body cart">
+                           <div class="col-sm-12 empty-cart-cls text-center">
+                               <img src="https://i.pinimg.com/564x/6f/fd/64/6ffd64c5366898c59bbc91d9aec935c3.jpg"  width="130px" height="130px" class="img-fluid cart_img mb-4 mr-3">
+                               <h3><strong>You have no order history</strong></h3>
+                               <h4>order something to make me happy :)</h4>
+                               <a href="/index" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
+                               
+                           
+                           </div>
+                   </div>
+           </div>
+                   
+               
+               </div>
+            
+            </div>
+           
+           </div>
+        <% } %>
+
+	<!-- //order -->
+
+
+    <div class="col text-center">
+        <div class="block-27">
+          <ul>
+            <% if (currentPage > 1) { %>
+              <li><a href="/orders?page=<%= currentPage - 1 %>">&lt;</a></li>
+            <% } %>
+      
+            <% for (let i = 1; i <= totalPages; i++) { %>
+              <% if (i === parseInt(currentPage)) { %>
+                <li class="active"><span><%= i %></span></li>
+              <% } else { %>
+                <li><a href="/orders?page=<%= i %>"><%= i %></a></li>
+              <% } %>
+            <% } %>
+      
+            <% if (currentPage < totalPages) { %>
+              <li><a href="/orders?page=<%= parseInt(currentPage) + 1 %>">&gt;</a></li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+
+
+    <%- include('footer') %>

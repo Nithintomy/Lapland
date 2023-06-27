@@ -1,0 +1,112 @@
+<%- include('header') %>
+
+
+<!-- update product Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4 align-items-center justify-content-center mt-5">
+      <div class="col-sm-12 col-xl-6">
+        <div class="bg-secondary rounded h-100 p-4">
+          <h6 class="mb-4">Update Product</h6>
+          <form action="/update_product/<%= user._id %>" id="update_product" name="basic" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="name"  value="<%= user.name %>"
+                id="exampleInputPassword1"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Price</label>
+              <input
+                type="number"
+                class="form-control"
+                name="price"  value="<%= user.price %>"
+                
+              />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Quantity</label>
+              <input
+                type="number"
+                class="form-control"
+                name="quantity"  value="<%= user.quantity %>"
+                
+              />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Specification</label>
+              <input
+                type="text"
+                class="form-control"
+                name="details"  value="<%= user.details %>"
+                id="exampleInputPassword1"
+              />
+            </div>
+  
+
+            
+            <div class="form-group mt-3">
+              <label for="image">Photo file:</label>
+              <input type="file" class="form-control-file" id="photo" name="photo" multiple>
+              <br>
+  
+              <div class="row">
+                <% for (const image of new_images) { %>
+                  <div class="col-3">
+                    <div class="image-container">
+                      <img src="/<%= image %>" width="100" class="img-thumbnail mt-3" alt="">
+                      <a href="/deleteImage/<%= user._id %>/<%= image %>" class="delete-icon">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </div>
+                  </div>
+                <% } %>
+  
+                <% for (const image of user.photo) { %>
+                  <div class="col-3">
+                    <div class="image-container">
+                      <img src="/<%= image %>" width="100" class="img-thumbnail mt-3" alt="">
+                      <a href="/deleteImage/<%= user._id %>/<%= image %>" class="delete-icon" >
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </div>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+    
+            
+           
+            
+            
+  
+            <div class="form-group dropdown mt-4">
+              <button type="button" class="btn btn-light" data-toggle="dropdown">
+                Categories
+                <select name="category">
+                  <% category.forEach(function(product) { %>
+                    <option value="<%= product.category %>" <% if (product.category === user.category_name) { %>
+                      selected
+                    <% } %>>
+                      <%= product.category %>
+                    </option>
+                  <% }); %>
+                </select>
+              </button>
+            </div>
+  
+            <button type="submit" class="btn btn-primary mt-5">
+              Update Product
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- update product End -->
+  
+
+
+  <%- include('footer') %>

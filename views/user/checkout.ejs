@@ -1,0 +1,516 @@
+<%- include('header') %>
+<style>
+	section{padding:3% 0}
+.alizarin{background:#e74c3c}
+.amethyst{background:#9b59b6}
+.emerald{background:#2ecc71}
+.midnight-blue{background:#2c3e50}
+.peter-river{background:#3498db}
+.dl{background:#f0f0f0;padding:20px 0;border-radius:25px;position:relative}
+.dl:before{content:" ";height:20px;width:20px;background:#ddd;border-radius:20px;position:absolute;left:50%;top:20px;margin-left:-10px}
+.dl .brand{text-transform:uppercase;letter-spacing:3px;padding:10px 15px;margin-top:10px;text-align:center;min-height:100px}
+.dl .discount{min-height:15px;position:relative;font-size:40px;line-height:40px;text-align:center;font-weight:500;padding:15px 15px 0;color:#f1c40f}
+.dl .discount:after{content:" ";border-right:20px solid transparent;border-left:20px solid transparent;position:absolute;bottom:-20px;left:80%}
+.dl .discount.alizarin:after{border-top:20px solid #e74c3c}
+.dl .discount.peter-river:after{border-top:20px solid #3498db}
+.dl .discount.emerald:after{border-top:20px solid #2ecc71}
+.dl .discount.amethyst:after{border-top:20px solid #9b59b6}
+.dl .discount .type{font-size:20px;letter-spacing:1px;text-transform:uppercase;margin-top:-30px}
+.dl .descr{color:#999;margin-top:10px;padding:20px 15px}
+.dl .ends{padding:0 15px;color:#f1c40f;margin-bottom:10px}
+.dl .coupon{min-height:50px;text-align:center;text-transform:uppercase;font-weight:700;font-size:18px;padding:20px 15px}
+.dl .coupon a.open-code{color:#16a085}
+.dl .coupon .code{letter-spacing:1px;border-radius:4px;margin-top:10px;padding:10px 15px;color:#f1c40f;background:#f0f0f0}
+.card-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: none;
+}
+
+.card-2{
+    border-radius:20px;
+}
+
+
+.card-child{
+    
+    border:3px solid blue;
+    border-radius:16px;
+    
+}
+
+.circle{
+    
+    background-color:#ebdffb;
+    height:50px;
+    width:50px;
+    border-radius:50%;
+    display:flex;
+    color:#9553ea;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+        
+}
+
+
+.circle-2{
+    
+    background-color:#fbebdf;
+    height:50px;
+    width:50px;
+    border-radius:50%;
+    display:flex;
+    color:#ea9253;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+        
+}
+
+
+.circle-3{
+    
+    background-color:blue;
+    height:50px;
+    width:50px;
+    border-radius:50%;
+    display:flex;
+    color:#fff;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+        
+}
+.delivery-address-box {
+  background-color: #f2c94c; 
+  padding: 2px;
+  width: 80%;
+  border-radius: 5px;
+}
+
+.bg-custom-color {
+  background-color: #f2c94c; 
+  padding: 2px;
+  border-radius: 50%;
+}
+.btn-custom-primary {
+  background-color: #FF0000; 
+  color: #FFFFFF; 
+  border-radius: 0; 
+ 
+}
+
+.btn-custom-danger {
+  background-color: #000000; 
+  color: #FFFFFF; 
+  border-radius: 0; 
+  
+}
+
+.delete-icon {
+  font-size: 16px; 
+  
+}
+
+
+
+.water-flow {
+  position: relative;
+  overflow: hidden;
+
+}
+.water-flow:hover {
+  cursor: pointer;
+}
+
+
+.button-text {
+  position: relative;
+  z-index: 1;
+}
+
+.water-flow:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: -100%;
+  background-image: linear-gradient(to right, #a0a0f1 0%, #9b9bf1 100%);
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: waterFlow 2s infinite;
+  transition: opacity 0.3s;
+}
+
+.water-flow:hover {
+  background-color: transparent;
+}
+
+.water-flow:hover:before {
+  opacity: 1;
+}
+
+.water-flow:hover .button-text {
+  color: white;
+}
+
+@keyframes waterFlow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
+</style>
+
+<section class="ftco-section">
+	<div class="container">
+	  <div class="row justify-content-center">
+		<div class="col-xl-7 ftco-animate">
+
+			<div class="card p-3 py-3 mt-3 card-1 text-start">
+			  <div class="delivery-address-box mb-2">
+				<div class="d-flex align-items-center ">
+				  <div class="bg-custom-color">
+					<span class="circle">
+					  <i class="fa fa-home"></i>
+					</span>
+				  </div>
+				  <h4 class="text-center mt-2 ml-3 " style="font-family: 'Arial', sans-serif;">Delivery Address</h4>
+				</div>
+			  </div>
+			  <% if(locals.msg) { %>
+				<div id="msg" class="alert alert-success"><%- locals.msg -%></div>
+				<% } %>
+			
+			  <% if (data && data.length > 0) { %>
+				<% data.forEach((address, index) => { %>
+				  <div class="card-2"> 
+					<div class="p-3 card-child">
+					  <div class="d-flex flex-row align-items-start">
+						<div class="d-flex flex-column ms-3">
+						  <form action="/payment/<%= address._id %>">
+							<div class="address-details text-dark">
+							  <span class="address-name"><%= address.name %></span>
+							  <span class="address-info"><%= address.address %></span>
+							  <span class="address-info">Phone: <%= address.phone %></span>
+							  <span class="address-info">Pin Code: <%= address.pincode %></span>  
+							  <span class="address-info">Email: <%= address.email %></span>
+							</div>
+							<div class="button-container mt-3">
+							  <button class="btn btn-custom-primary" type="submit">Deliver Here</button>
+							  <a class="btn btn-custom-danger delete-btn" href="/deleteaddress/<%= address._id %>"
+								onclick="confirmDelete(event); return false;">
+							   <span class="delete-icon">&times;</span> Delete
+							 </a>
+							 
+							</div>
+							
+						  </form>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				<% }); %>
+			  <% } else { %>
+				<p class="text-dark">No addresses found</p>
+			  <% } %>
+			</div>
+			
+			
+		  
+
+
+
+
+
+
+
+			<!-- Button trigger modal -->
+			<button type="button" class="btn-sm fw-bold water-flow ml-4 mb-4 mt-2" data-toggle="modal" data-target="#exampleModalCenter">
+				<i class="fas fa-plus-circle me-2"></i>
+				<span class="button-text">Add New Address</span>
+			  </button>	  
+</div>
+
+
+
+				  
+<div class="col-xl-4">
+	<div class="row mt-4">
+	  <div class="col-md-12">
+		<div class="card p-3 py-3 mb-3 bg-dark">
+		  <div class="cart-total mb-3 d-flex justify-content-between align-items-center">
+			<h3 class="mb-0 text-warning">Coupon Code</h3>
+			<button class="btn btn-primary btn-sm" style="color: blue;" type="button" data-toggle="modal" data-target="#viewAllModal">
+			  View All
+			</button>
+		  </div>
+		  <p class="text-white ml-2">Enter your coupon code if you have one</p>
+		  <form class="p-2" action="/coupon" method="post" id="couponForm">
+			<div class="input-group">
+			  <input type="text" class="form-control text-left px-3" name="coupon" placeholder="Enter coupon Code" oninput="toggleApplyButton(this)">
+			  <div class="input-group-append">
+				<button class="btn btn-primary" type="submit" id="applyButton" style="display: none;">Redeem</button>
+			  </div>
+			</div>
+		  </form>
+		</div>
+	  </div>
+	</div>
+  </div>
+  
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="viewAllModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+	  <div class="modal-content">
+		  <div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Coupon Codes</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+			  </button>
+		  </div>
+		  <% coupon.forEach((coupon) => { %>
+	  <div class="modal-body d-flex justify-content-center">
+	  <div class="col-sm-6 col-sm-9 ">
+		<div class="dl">
+		  <div class="brand">
+			<h2><%-coupon.brand %></h2>
+		  </div>
+		  <div class="discount alizarin"><%-coupon.discount %><span class="type ml-2">% off</span></div>
+		 
+		  <div class="ends">
+			<small>* Conditions and restrictions apply.</small>
+			<br>
+			<p>Expired on</p>
+			<p>* <%-coupon.date %> *</p>
+		  </div>
+		  <div class="coupon midnight-blue">
+			<a data-toggle="collapse" href="#code-1" class="open-code">Get a code</a>
+			<div id="code-1" class="collapse code"><%-coupon.code%></div>
+		   
+		  </div>
+		</div>
+	  </div>
+	  <!-- Add similar code for other coupons -->
+	</div>
+	<% }) %>
+
+		</div>
+	  </div>
+   </div>
+
+</div>
+					
+<div class="col-md-12 d-flex mb-5">
+	<div class="cart-detail cart-total p-3 p-md-4">
+	  <h3 class="billing-heading mb-4">Cart Total</h3>
+	  <p class="d-flex">
+		<span>Subtotal</span>
+		<span>₹<%= cart.total %></span>
+	  </p>
+	  <p class="d-flex">
+		<span>Discount</span>
+		<span>₹<%= cart.discount.toFixed(2) %></span>
+		<% if (cart.discount) { %>
+		 
+		  <a class="btn btn-custom-danger delete-btn" href="/deleteCoupon/<%= cart.discount._id %>">
+		   <span class="delete-icon">&times;</span> Remove
+		 </a>
+		<% } %>
+	  </p>
+	  <% if (discountMsg) { %>
+		<span><%= discountMsg %></span>
+	  <% } %>
+	  
+	  </p>
+	  <% if (balanceMsg) { %>
+		<p class="d-flex">
+		  <span><%= balanceMsg %></span>
+		</p>
+	  <% } %>
+	  <p class="d-flex total-price">
+		<span>Total</span>
+		<span>₹<%= cart.total - cart.discount %></span>
+	  </p>
+	</div>
+  </div>
+  
+
+
+					  </div>
+					</div> <!-- .col-md-8 -->
+				  </div>
+				</div>
+			  </section>  <!-- .section -->
+
+	  <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+	<div class="container py-4">
+	  <div class="row d-flex justify-content-center py-5">
+		<div class="col-md-6">
+			<h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
+			<span>Get e-mail updates about our latest shops and special offers</span>
+		</div>
+		<div class="col-md-6 d-flex align-items-center">
+		  <form action="#" class="subscribe-form">
+			<div class="form-group d-flex">
+			  <input type="text" class="form-control" placeholder="Enter email address">
+			  <input type="submit" value="Subscribe" class="submit px-3">
+			</div>
+		  </form>
+		</div>
+	  </div>
+	</div>
+  </section>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLongTitle">Add New Address</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		  <form action="/addAddress" method="post" class="creditly-card-form agileinfo_form">
+			<div class="row align-items-end">
+			  <div class="col-md-6">
+				<div class="form-group">
+				  <label for="name">Name</label>
+				  <input type="text" class="form-control" name="name" placeholder="">
+				</div>
+			  </div>
+			 
+			  <div class="w-100"></div>
+			  <div class="col-md-12">
+				<div class="form-group ">
+				  <label for="streetaddress">Address</label>
+				  <input type="text" class="form-control" name="address">
+				</div>
+			  </div>
+  
+			  <div class="w-100"></div>
+			  <div class="col-md-6">
+				<div class="form-group">
+				  <label for="towncity">City</label>
+				  <input type="text" class="form-control" name="city" placeholder="">
+				</div>
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-group">
+				  <label for="postcodezip">Postcode / ZIP *</label>
+				  <input type="text" class="form-control" name="pincode" placeholder="">
+				</div>
+			  </div>
+			  <div class="w-100"></div>
+			  <div class="col-md-6">
+				<div class="form-group">
+				  <label for="phone">Phone</label>
+				  <input type="text" class="form-control" name="phone" placeholder="">
+				</div>
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-group">
+				  <label for="emailaddress">Email Address</label>
+				  <input type="text" class="form-control" name="email" placeholder="">
+				</div>
+			  </div>
+			  <div class="col-md-12">
+				<div class="form-group text-right">
+				  <button class="btn btn-info" type="submit"><i class="fas fa-plus-circle me-2"></i>Add Address</button>
+				</div>
+			  </div>
+			</div>
+		  </form>
+		</div>
+	  </div>
+	</div>
+  </div>
+  
+
+   
+
+   
+
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
+
+	<script>
+        setTimeout(() => {
+
+            document.getElementById('msg').style.display="none"
+            
+        }, 3000);
+
+	  
+
+function confirmDelete(event) {
+event.preventDefault();
+
+Swal.fire({
+title: "Do you really want to Delete the address?",
+icon: "warning",
+showCancelButton: true,
+confirmButtonText: "Yes",
+cancelButtonText: "No"
+}).then(function (result) {
+if (result.isConfirmed) {
+window.location.href = event.target.getAttribute("href");
+}
+});
+}
+</script>
+
+
+	<script>
+
+		
+		
+$(document).ready(function() {
+  const setSubtotal = () => {
+    const itemTotalElements = $('.item-total');
+    let subtotal = 0;
+
+    itemTotalElements.each(function() {
+      const itemTotalValue = parseFloat($(this).text().replace(/[^0-9.-]+/g, ''));
+      subtotal += itemTotalValue;
+    });
+
+    const subtotalElement = $('#subtotal');
+    const totalSubtotalElement = $('#total-subtotal');
+
+    subtotalElement.text(`₹ ${subtotal.toFixed(2)}`);
+    totalSubtotalElement.text(`₹ ${subtotal.toFixed(2)}`);
+  };
+})
+
+  setSubtotal();
+
+
+  function toggleApplyButton(input) {
+    const applyButton = document.getElementById("applyButton");
+    applyButton.style.display = input.value.trim() !== "" ? "block" : "none";
+  }
+
+
+
+</script>
+  
+<%- include('footer') %>

@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Lap Land Ecommerce</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- CSS stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/user/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/user/css/animate.css">
+    <link rel="stylesheet" href="/user/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/user/css/magnific-popup.css">
+    <link rel="stylesheet" href="/user/css/aos.css">
+    <link rel="stylesheet" href="/user/css/ionicons.min.css">
+    <link rel="stylesheet" href="/user/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/user/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="/user/css/flaticon.css">
+    <link rel="stylesheet" href="/user/css/icomoon.css">
+    <link rel="stylesheet" href="/user/css/style.css">
+    <link rel="stylesheet" href="/public/user/css/addressShow.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.css">
+    	<!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
+    <!-- JavaScript scripts -->
+
+
+    <script src="https://kit.fontawesome.com/a9e78735c3.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.js"></script>
+
+	
+<!-- SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+
+
+  </head>
+  
+  <body class="goto-here">
+		
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+		<div class="container">
+		  <a class="navbar-brand" href="index">Lap Land</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="oi oi-menu"></span> Menu
+		  </button>
+	  
+		  <div class="collapse navbar-collapse" id="ftco-nav">
+			<ul class="navbar-nav ml-auto">
+			  <li class="nav-item active"><a href="/index" class="nav-link">Home</a></li>
+			  <li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
+				<div class="dropdown-menu" aria-labelledby="dropdown04">
+				  <a class="dropdown-item" href="/shop">Shop</a>
+				  <a class="dropdown-item" href="/viewWishlist">Wishlist</a>
+				
+				</div>
+			  </li>
+			  <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+			  <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+			  <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+	  
+			  <% if (locals.User) { %>
+			 
+			  <li class="nav-item"><a href="/order/<%= User._id %>" class="nav-link">Orders</a></li>
+			
+			  <li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+			  <% } else { %>
+			  <li class="nav-item cta cta-colored"><a href="/login" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+			  <% } %>
+	    
+			  <% if (locals.User) { %>
+			  <% if (User.isLogedin) { %>
+			  <li class="nav-item mt-3 ml-5 "><a href="/profile/<%-User._id%>"><i class="fa-regular fa-user fa-2x" ></i></a></li>
+			  <form action="/log_out/<%= User._id%>" method="post">
+				<li><button type="submit" class="btn log_out mt-3 ml-5 text-danger ">Logout</button></li>
+			  </form>
+			  <% } %>
+			  <% } else { %>
+			  <li class="nav-item mt-3 ml-3 "><a href="/login" class="btn">Sign In</a></li>
+			  <% } %>
+			
+			</ul>
+		  </div>
+		  <!-- sign in -->
+		  <div class="sign_in">
+		  </div>
+		  <!-- //sign in -->
+		</div>
+	  </nav>
+	  <!-- END nav -->
+	  
+
+
+	<% if(locals.message) { %>
+		<div id="msg" class="alert alert-success"><%- locals.message -%></div>
+		<%}%>
+	<% if(locals.msg) { %>
+		<div id="msg" class="alert alert-success"><%- locals.msg -%></div>
+		<%}%>

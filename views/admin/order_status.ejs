@@ -1,0 +1,160 @@
+<%- include('header') %>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css" />
+
+
+            <!-- product Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <form action="/adminSalesReportFilter" method="post" class="date-filter-form">
+                        <div class="row align-items-center">
+                            <div class="col-md-4 col-sm-12 text-right mb-2">
+                                <h5>Filter Orders</h5>
+                            </div>
+                            <div class="col-md-8 col-sm-12">
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-3">
+                                        <label for="fromDate">FROM:</label>
+                                        <input type="date" value="newDate.[0]" name="fromdate" id="fromDate">
+                                    </div>
+                                    <div>
+                                        <label for="toDate">TO:</label>
+                                        <input type="date" value="newDate.[1]" name="todate" id="toDate">
+                                    </div>
+                                    <div class="ml-5">
+                                        <input type="submit" value="Submit" class="btn-sm btn text-light mb-4 " style="background-color: rgb(216, 149, 5) ;margin-top: 30px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+    
+                    <div class="col-12">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Product Details</h6>
+                            
+                            <div class="table-responsive">
+                                <table id="productTable" class="table">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">No:</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">date</th>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">quantity</th>
+                                        <th scope="col">total</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">status</th>
+                                        <th scope="col">Action</th>
+                                        <th scope="col">Return</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <% order_data.forEach(function(orders, index) { %>
+                                      <tr>
+                                        <td><%= index+1 %></td>
+                                        <td><%= orders.user.name %></td>
+                                        <td><%= orders.createdAt.toLocaleDateString() %></td>
+                                        <td>
+                                          <div class="order_pro">
+                                            <% orders.items.forEach((items) => { %>
+                                              <%= items.product.name %> <br>
+                                            <% }) %>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <% orders.items.forEach((items) => { %>
+                                            <%= items.quantity %> <br>
+                                          <% }) %>
+                                        </td>
+                                        <td>
+                                          ₹<%= orders.total%>
+                                        </td>
+                                        <td>
+                                          <% orders.items.forEach((items) => { %>
+                                            <img src="/<%= items.product.photo[0] %>" class="img-thumbnail" width="40px" alt=""> <br>
+                                          <% }) %>
+                                        </td>
+                                        <td>
+                                          <%= orders.status %>
+                                          <div>
+                                            <a type="submit" href="/orderdetail/<%= orders._id %>" class="btn btn-light">Details</a>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-pencil-alt"></i>Edit</a>
+                                          <div class="dropdown-menu bg-transparent border-0">
+                                            <form action="/order_update/<%= orders._id %>" method="post">
+                                              <select name="status">
+                                                <option value="Pending" <% if (orders.status === 'Pending') { %>selected<% } %>>Pending</option>
+                                                <option value="Shipped" <% if (orders.status === 'Shipped') { %>selected<% } %>>Shipped</option>
+                                                <option value="Delivered" <% if (orders.status === 'delivered') { %>selected<% } %>>Delivered</option>
+                                                <option value="cancelled" <% if (orders.status === 'cancelled') { %>selected<% } %>>Cancel</option>
+                                              </select>
+                                              <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </form>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <% const currentDate = new Date(); %>
+                                          <% const orderDate = orders.createdAt; %>
+                                          <% const returnPeriod = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds %>
+                                          <% if (currentDate - orderDate > returnPeriod) { %>
+                                            <p>The return period for this order has expired.</p>
+                                          <% } else { %>
+                                            <% if (orders.payment_method === "COD") { %>
+                                              <% if (orders.status === "Returned") { %>
+                                                <div>
+                                                  <form action="/order_refund/<%= orders._id %>" method="post">
+                                                    <button type="submit" value="Refunded" class="btn btn-danger">Refund</button>
+                                                  </form>
+                                                </div>
+                                              <% } %>
+                                            <% } else if (orders.payment_method === "paypal" || orders.payment_method === "Razorpay" || orders.payment_method === "wallet") { %>
+                                              <% if (orders.status === "cancelled" || orders.status === "Returned") { %>
+                                                <div>
+                                                  <form action="/order_refund/<%= orders._id %>" method="post">
+                                                    <button type="submit" value="Refunded" class="btn btn-danger">Refund</button>
+                                                  </form>
+                                                </div>
+                                              <% } %>
+                                            <% } %>
+                                          <% } %>
+                                        </td>
+                                      </tr>
+                                      <% }) %>
+                                    </tbody>
+                                  </table>
+                                  
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- product End -->
+
+           
+
+
+   <%- include('footer') %>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $('#productTable').DataTable({
+      dom: 'Bfrtip',
+      buttons: [
+        'csv', 'print', 'pdf'
+      ]
+    });
+  });
+</script>
+
+

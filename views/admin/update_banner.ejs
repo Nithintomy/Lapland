@@ -1,0 +1,46 @@
+<%- include('header') %>
+
+
+<!-- update product Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4 align-items-center justify-content-center mt-5">
+      <div class="col-sm-12 col-xl-6">
+        <div class="bg-secondary rounded h-100 p-4">
+          <h6 class="mb-4">Update Banner</h6>
+          <form action="/update_banner/<%= banner._id %>" id="update_banner" name="basic" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="name" class="form-label">Banner Title </label>
+              <input type="text" class="form-control" name="title" type="text"value="<%= banner.title %>"id="name" required />
+            </div>
+            <div class="mb-3">
+              <label for="int" class="form-label">Sub title </label>
+              <input type="String" class="form-control" name="subtitle" value="<%= banner.subtitle %>" required />
+            </div>
+            <div class="mb-3">
+                <label for="link">Banner link</label>
+                <input id="link" name="link" type="text" class="form-control validate" value="<%= banner.link %>" required />
+              </div>
+            
+  
+            
+            <div class="form-group mt-3">
+                <label for="image">Image</label>
+                <input type="file" class="form-control-file" id="image" name="image" multiple >
+                <img src="/<%= banner.image %>" width="100" class="img-thumbnail mt-3" alt="">
+    </div>
+  
+           
+  
+            <button type="submit" class="btn btn-primary mt-5">
+              Update Banner
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- update product End -->
+  
+
+
+  <%- include('footer') %>

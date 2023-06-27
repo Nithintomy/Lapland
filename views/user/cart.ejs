@@ -1,0 +1,216 @@
+<%- include('header') %>
+
+
+
+	<section class="ftco-section ftco-cart ">
+		<div class="container">
+			<div class="row">
+			<div class="col-md-12 ftco-animate">
+				<div class="cart-list">
+
+					
+					<table class="table">
+						<thead class="thead-primary">
+						  <tr class="text-center">
+							<th>&nbsp;</th>
+							<th>Product name</th>
+							<th>Price</th>
+							<th>Quantity</th>
+							<th>Total</th>
+							<th>&nbsp;</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <% if (products.length > 0) { %>
+							<% products.forEach((product) => { %>
+							  <tr class="text-center">
+								<td class="image-prod">
+								  <div class="img" style="background-image: url('<%= product.productId.photo[0] %>');"></div>
+								</td>
+								<td class="product-name">
+								  <h3><%= product.productId.name %></h3>
+								  <p><%- product.productId.details %></p>
+								</td>
+								<td class="price">₹ <%= product.productId.price %></td>
+								<td class="quantity">
+								  <div class="input-group mb-3">
+									<span class="input-group-btn mr-2">
+									  <button type="button" class="quantity-left-minus btn" data-type="minus" id="decrement_<%= product.productId._id %>">
+										<i class="ion-ios-remove"></i>
+									  </button>
+									</span>
+									<input type="text" id="quantity_<%= product.productId._id %>" name="quantity" class="quantity form-control input-number" value="<%= product.quantity %>" min="1" max="100">
+									<span class="input-group-btn ml-2">
+									  <button type="button" class="quantity-right-plus btn" data-type="plus" id="increment_<%= product.productId._id %>">
+										<i class="ion-ios-add"></i>
+									  </button>
+									</span>
+
+								  </div>
+								  <div class="enthelum" id="remains_<%= product.productId._id %>"><span><%=(product.productId.quantity-product.quantity)%></span></div>
+												
+								</td>
+								<% var total = product.quantity * product.productId.price %>
+								<td id="product-total-price-<%= product.productId._id %>" class="item-total">₹ <%= total %></td>
+								<td class="product-remove">
+								  <a href="/deleteCartItem/<%= product.productId._id %>">
+									<span class="ion-ios-close"></span>
+								  </a>
+								</td>
+							  </tr>
+							<% }) %>
+						  <% } else { %>
+							<tr>
+							  <td colspan="6" class="text-center">
+								<h4>CART IS EMPTY</h4>
+							  </td>
+							</tr>
+						  <% } %>
+						</tbody>
+					  </table>
+					  
+				  </div>
+			</div>
+		</div>
+		<div class="row justify-content-end">
+
+
+			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+				<div class="cart-total mb-3">
+					<h3>Cart Totals</h3>
+					<p class="d-flex">
+						<span>Total</span>
+						<span id="subtotal"></span>
+					</p>
+					<p class="d-flex">
+						<span>Delivery</span>
+						<span>₹0.00</span>
+					</p>
+					
+					<hr>
+					<p class="d-flex total-price">
+						
+						<span >Subtotal</span>
+						<span id="total-subtotal"></span>
+					</p>
+				</div>
+				<% if (products.length > 0) { %>
+				<p><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+				<% } %>
+			</div>
+
+			
+	
+		</div>
+		</div>
+	</section>
+
+		<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+      <div class="container py-4">
+        <div class="row d-flex justify-content-center py-5">
+          <div class="col-md-6">
+          	<h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
+          	<span>Get e-mail updates about our latest shops and special offers</span>
+          </div>
+          <div class="col-md-6 d-flex align-items-center">
+            <form action="#" class="subscribe-form">
+              <div class="form-group d-flex">
+                <input type="text" class="form-control" placeholder="Enter email address">
+                <input type="submit" value="Subscribe" class="submit px-3">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+	<script>
+		$(document).ready(function() {
+  const setSubtotal = () => {
+    const itemTotalElements = $('.item-total');
+    let subtotal = 0;
+
+    itemTotalElements.each(function() {
+      const itemTotalValue = parseFloat($(this).text().replace(/[^0-9.-]+/g, ''));
+      subtotal += itemTotalValue;
+    });
+
+    const subtotalElement = $('#subtotal');
+    const totalSubtotalElement = $('#total-subtotal');
+
+    subtotalElement.text(`₹ ${subtotal.toFixed(2)}`);
+    totalSubtotalElement.text(`₹ ${subtotal.toFixed(2)}`);
+  };
+
+  setSubtotal();
+
+  $('.quantity-left-minus').click(function() {
+    const cartItemId = $(this).attr('id').split('_')[1];
+    decrementQuantity(cartItemId);
+  });
+
+  $('.quantity-right-plus').click(function() {
+    const cartId = $(this).attr('id').split('_')[1];
+    incrementQuantity(cartId);
+  });
+
+  function incrementQuantity(cartId) {
+	const remain = document.getElementById(`remains_${cartId}`);
+	if (remain.innerText == "out of stock") {
+				alert("Out of stock ")
+             }else{
+				 $.ajax({
+      url: "/incrementQuantity",
+      method: "POST",
+      data: { cartId: cartId },
+      success: function(data) {
+        if (data.success) {
+          $(`#product-total-price-${cartId}`).text(`₹ ${data.total}`);
+          $(`#quantity_${cartId}`).val(data.quantity);
+		  $(`#remains_${cartId}`).text(data?.mess);
+          setSubtotal();
+        } else {
+          console.log('Error while updating');
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log('Error:', textStatus, errorThrown);
+      }
+    });
+			 }
+   
+  }
+
+  function decrementQuantity(cartItemId) {
+    var currentQuantity = parseInt($(`#quantity_${cartItemId}`).val());
+    if (currentQuantity > 1) {
+      $.ajax({
+        url: "/decrementQuantity",
+        method: "post",
+        data: { cartItemId: cartItemId },
+        success: function(data) {
+          $(`#product-total-price-${cartItemId}`).text(`₹ ${data.total}`);
+          $(`#quantity_${cartItemId}`).val(data.quantity);
+		  $(`#remains_${cartItemId}`).text(data?.mess);
+          setSubtotal();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log('Error:', textStatus, errorThrown);
+        }
+      });
+    } else {
+      $(`#quantity_${cartItemId}`).val(1);
+    }
+  }
+});
+
+	  </script>
+	  
+  
+	  
+
+
+    <%- include('footer') %>

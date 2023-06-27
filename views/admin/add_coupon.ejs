@@ -1,0 +1,60 @@
+
+
+
+
+
+
+
+
+
+
+  <%- include('header') %>
+  
+   <!-- Form Start -->
+   <div class="container-fluid pt-4 px-4">
+    <div class="row g-4 align-items-center justify-content-center mt-5">
+      <div class="col-sm-12 col-xl-6">
+        <div class="bg-secondary rounded h-100 p-4">
+          <h6 class="mb-4">Add coupon</h6>
+          <div>
+            <% if(locals.msg) { %>
+              <div id="msg" class="alert alert-success"><%- locals.msg -%></div>
+              <%}%>
+          </div>
+          <form action="/add_coupon" method="POST" class="tm-edit-product-form">
+            <div class="form-group mb-3">
+                <label>Brand</label>
+                <input id="brand" name="brand" type="text" class="form-control validate" required />
+            </div>
+            <div class="form-group mb-3">
+                <label for="coupon code">coupon code
+                </label>
+                <input id="coupon_code" name="coupon_code" type="text" class="form-control validate"
+                    required />
+            </div>
+            <div class="form-group mb-3">
+                <label>Expiry Date</label>
+                <input id="date" name="date" type="date" class="form-control validate" required />
+            </div>
+            <div class="form-group mb-3">
+                <label>Discount Amount</label>
+                <input id="discount" name="discount" type="number" class="form-control validate"
+                    required />
+            </div>
+            <button type="submit" class="btn btn-primary">Add Coupon Now</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Form End -->
+  
+  <script>
+    setTimeout(() => {
+
+        document.getElementById('msg').style.display="none"
+        
+    }, 3000);
+</script>
+
+  <%- include('footer') %>
