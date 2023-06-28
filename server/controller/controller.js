@@ -377,35 +377,43 @@ exports.contact = (req, res) => {
     res.render("contact",{User});
   };
   //payment
-exports.payment = async (req, res) => {
-  const User = req.session.user
-  try{
-
-    const id = req.params.id
-    const userId = req.session.user?._id
-    const cart = await cartSchema.findOne({ userId: userId }).populate(
-      "products.productId")
-    const user = await UserSchema.findOne(
-      { _id: userId},
-      { address: { $elemMatch: { _id: id } } }
-    );
-if(user){
-  const products = cart.products
-  let subtotal = 0;
-  for (const product of products) {
-    subtotal += product.productId.price * product.quantity;
-  }
-
-   const address = user.address[0]
-
-    res.render("payment",{address,subtotal,User});
+  exports.payment = async (req, res) => {
+    const User = req.session.user;
+    try {
+      const id = req.params.id;
+      const userId = req.session.user?._id;
+      const cart = await cartSchema.findOne({ userId: userId }).populate("products.productId");
+      const user = await UserSchema.findOne(
+        { _id: userId },
+        { address: { $elemMatch: { _id: id } } }
+      );
+  
+      if (user) {
+        const products = cart.products;
+        let subtotal = 0;
+        for (const product of products) {
+          subtotal += product.productId.price * product.quantity;
+        }
+  
+        const address = user.address[0];
+  
+        // Get the balance from the Wallet schema
+        const wallet = await walletSchema.findOne({ userId: userId });
+        const balance = wallet ? wallet.balance : 0; // Set balance to 0 if wallet doesn't exist
+  
+        // Check if balance is insufficient
+        let balanceMsg = '';
+        if (balance < subtotal) {
+          balanceMsg = 'Insufficient balance. Please choose another payment method.';
+        }
+  
+        res.render("payment", { address, subtotal, User, balanceMsg, balance }); // Pass balanceMsg and balance to the EJS template
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Some Error occurred");
     }
-  }
-  catch (error) {
-    console.error(error);
-    res.status(500).send('Some Error occurred') 
-};
-}
+  };
 
 exports.blog = (req, res) => {
   const User = req.session.user 
@@ -479,12 +487,24 @@ exports.placeOrder = async (req, res) => {
             shipping_charge: 50,
             address: specifiedAddress,
           });
+
+
+            // Check wallet balance
+            if (payment === "wallet" && (!wallet || wallet.balance < totalPrice)) {
+              req.session.balanceMsg = "Insufficient balance. Please choose another payment method.";
+              res.redirect(`/payment/${address._id}`); // Redirect to payment page
+              return;
+            }
+
     
           await order.save();
           let data = order;
           await cartSchema.deleteOne({ userId: userId });
     
           if(payment === "wallet"){
+
+
+          
             const Twallet= wallet.balance-totalPrice;
             await walletSchema.findOneAndUpdate({userId:userId},{balance:Twallet})
           }
@@ -610,7 +630,6 @@ exports.placeOrder = async (req, res) => {
           res.json({
             success: true,
             details: details,
-            
           });
           await cartSchema.deleteOne({ userId: userId });
         } catch (error) {
@@ -947,30 +966,29 @@ exports.decrementQuantity = async (req, res) => {
 
 
 //order page
-const ITEMS_PER_PAGE = 10;
-
 exports.order_details = async (req, res) => {
   const User = req.session.user;
   try {
     const id = req.params.id;
-    const page = req.query.page || 1; // Get the page number from the query parameters, default to 1 if not provided
-
-    const totalOrders = await order_model.countDocuments({ user: id });
-    const totalPages = Math.ceil(totalOrders / ITEMS_PER_PAGE); // Calculate the total number of pages
-
-    const order_data = await order_model
-      .find({ user: id })
+    const order_data = await order_model.find({ user: id })
       .populate("items.product")
-      .populate("items.quantity")
-      .skip((page - 1) * ITEMS_PER_PAGE) // Skip the appropriate number of orders based on the current page
-      .limit(ITEMS_PER_PAGE); // Limit the number of orders per page
+      .populate("items.quantity");
 
-    res.render("orders", { order_data, User, totalPages, currentPage: page });
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = 10;
+
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const ordersToShow = order_data.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(order_data.length / itemsPerPage);
+
+    res.render("orders", { order_data: ordersToShow, User, currentPage: page, totalPages, id, itemsPerPage });
   } catch (error) {
     console.error(error);
     res.send({ message: error.message });
   }
 };
+
 
 
 //order cancel
@@ -1193,9 +1211,10 @@ exports.deleteWishlist = async (req, res) => {
 
     const wishlistDeleted = await Wishlist.findOneAndUpdate(
       { userId: userId },
-      { $pull: { products: { _id: productId } } },
+      { $pull: { products:  productId  } },
       { new: true }
     );
+    
 
     if (wishlistDeleted) {
       res.redirect("/viewWishlist");
@@ -1207,7 +1226,6 @@ exports.deleteWishlist = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
-
 
 
 //profile

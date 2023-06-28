@@ -56,17 +56,9 @@
 
 <div class="input-group col-md-6 d-flex mb-3">
   
-  <span class="input-group-btn mr-2">
-    <button type="button" class="quantity-left-minus btn" data-type="minus" id="decrement_<%= product._id %>">
-      <i class="ion-ios-remove"></i>
-      </button>
-  </span>
-  <input type="text" id="quantity_<%= product._id %>" name="quantity" class="quantity form-control input-number" value="1" min="1" max="<%= product.quantity %>" readonly>
-  <span class="input-group-btn mr-2">
-    <button type="button" class="quantity-right-plus btn" data-type="plus" id="increment_<%= product._id %>">
-      <i class="ion-ios-add"></i>
-      </button>
-  </span>
+  
+ 
+  
 
 </div>
 </div>
@@ -77,11 +69,11 @@
   <% } %>
   <% if (locals.User) { %>
     <form action="/addToCart/<%= product._id %>" method="post">
-      <button class="btn btn--green pb-3 py-3 px-5" type="submit">Add to Cart</button>
+      <button class="btn btn--green  px-5" type="submit">Add to Cart</button>
     </form>
   <% } else { %>
     <form action="/login" method="get">
-      <button class="btn btn--green pb-3 py-3 px-5" type="submit">Add to Cart</button>
+      <button class="btn btn--green   px-5" type="submit">Add to Cart</button>
     </form>
   <% } %>
 <% } else { %>
@@ -115,14 +107,14 @@
         <div class="product">
         
           <a href="/single_product/<%= product._id %>" class="img-prod"><img class="img-fluid" src="/<%= product.photo[0] %>" alt="Colorlib Template">
-            <span class="status">30%</span>
+            <span class="status">15%</span>
             <div class="overlay"></div>
           </a>
           <div class="text py-3 pb-4 px-3 text-center">
             <h3><a href="#"><%= product.name %></a></h3>
             <div class="d-flex">
               <div class="pricing">
-                <p class="price"><span class="mr-2 price-dc">$120.00</span><span class="price-sale"><%= product.price %></span></p>
+                <p class="price"><span class="mr-2 price-dc"></span><span class="price-sale">₹<%= product.price %></span></p>
               </div>
             </div>
             <div class="bottom-area d-flex px-3">

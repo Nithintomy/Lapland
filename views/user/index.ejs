@@ -1,5 +1,62 @@
 <%- include('header') %>
 
+<style>
+  .center1 {
+  height: 37vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+}
+.wave {
+  width: 5px;
+  height: 100px;
+  background: linear-gradient(45deg, cyan, #fff);
+  margin: 10px;
+  animation: wave 1s linear infinite;
+  border-radius: 20px;
+}
+.wave:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.wave:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.wave:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.wave:nth-child(5) {
+  animation-delay: 0.4s;
+}
+.wave:nth-child(6) {
+  animation-delay: 0.5s;
+}
+.wave:nth-child(7) {
+  animation-delay: 0.6s;
+}
+.wave:nth-child(8) {
+  animation-delay: 0.7s;
+}
+.wave:nth-child(9) {
+  animation-delay: 0.8s;
+}
+.wave:nth-child(10) {
+  animation-delay: 0.9s;
+}
+
+@keyframes wave {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+</style>
+
 
 <section id="home-section" class="hero">
 	<div class="home-slider owl-carousel">
@@ -80,7 +137,7 @@
 							<div class="col-md-6 order-md-last align-items-stretch d-flex">
 								<div class="category-wrap-2 ftco-animate img align-self-stretch d-flex" style="background-image: url(/user/images/category.jpg);">
 									<div class="text text-center">
-										<h2>Laptops</h2>
+										<h2 class="text-dark" style="font-family: sans-serif; font-size:30px;">Laptops</h2>
 										<p>Upgrade your productivity with our powerful laptops.</p>
 										<p><a href="/shop" class="btn btn-primary">Shop now</a></p>
 									</div>
@@ -89,12 +146,12 @@
 							<div class="col-md-6">
 								<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(/user/images/category-1.jpg);">
 									<div class="text px-3 py-1">
-										<h2 class="mb-0"><a href="#">Apple</a></h2>
+										<h2 class="mb-0"><a href="/shop">Apple</a></h2>
 									</div>
 								</div>
 								<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(/user/images/category-2.jpg);">
 									<div class="text px-3 py-1">
-										<h2 class="mb-0"><a href="#">Acer</a></h2>
+										<h2 class="mb-0"><a href="/shop">Acer</a></h2>
 									</div>
 								</div>
 							</div>
@@ -105,12 +162,12 @@
 					<div class="col-md-4">
 						<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(/user/images/category-3.jpg);">
 							<div class="text px-3 py-1">
-								<h2 class="mb-0"><a href="#">HP</a></h2>
+								<h2 class="mb-0"><a href="/shop">HP</a></h2>
 							</div>		
 						</div>
 						<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(/user/images/category-4.jpg);">
 							<div class="text px-3 py-1">
-								<h2 class="mb-0"><a href="#">MSI</a></h2>
+								<h2 class="mb-0"><a href="/shop">MSI</a></h2>
 							</div>
 						</div>
 					</div>
@@ -137,7 +194,7 @@
 						<div class="product">
 						  
 							<a href="/single_product/<%= product._id %>" class="img-prod"><img class="img-fluid" src="/<%= product.photo[0] %>" alt="Colorlib Template">
-								<span class="status">30%</span>
+								<span class="status">15%</span>
 								<div class="overlay"></div>
 							</a>
 							<div class="text py-3 pb-4 px-3 text-center">
@@ -153,17 +210,23 @@
 											<span><i class="ion-ios-menu"></i></span>
 										</a>
 										<% if (locals.User) { %>
-										  <form action="/addtocart/<%= product._id %>" method="post">
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
-									  </form>
+                      <a class="buy-now d-flex justify-content-center align-items-center mx-1 btn-transparent" href="#" onclick="addToCart('<%= product._id %>')">
+                        <span><i class="ion-ios-cart"></i></span>
+                        </a>
+    
+                    <a href="/wishlist/<%= product._id %>" class="heart d-flex justify-content-center align-items-center text-center ">
+                      <span><i class="ion-ios-heart"></i></span>
+                    </a>
+  
 									  <% } else { %>
-										  <button type="button" ONCLICK="alert('you need to Login first!')" ><i class="ion-ios-cart"></i></button>
+                      <a class="buy-now d-flex justify-content-center align-items-center mx-1 btn-transparent" href="#"  ONCLICK="alert('you need to Login first!')">
+                        <span><i class="ion-ios-cart"></i></span>
+                        </a>
+                        <a href="#" class="heart d-flex justify-content-center align-items-center text-center" ONCLICK="alert('you need to Login first!')">
+                          <span><i class="ion-ios-heart"></i></span>
+                        </a>
 										  <% } %>	
-										<a href="#" class="heart d-flex justify-content-center align-items-center ">
-											<span><i class="ion-ios-heart"></i></span>
-										</a>
+										
 									</div>
 								</div>
 							</div>
@@ -177,16 +240,18 @@
     		</div>
     	</div>
     </section>
+
 		
-		<section class="ftco-section img" style="background-image: url(/user/images/bg_3.jpg);">
+		<section class="ftco-section img" style="background-image: url(/user/images/bg_3.jpg); opacity: 0.9;">
     	<div class="container">
 				<div class="row justify-content-end">
           <div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate">
-          	<span class="subheading">Best Price For You</span>
-            <h2 class="mb-4">Deal of the day</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-            <h3><a href="#">Spinach</a></h3>
-            <span class="price">$10 <a href="#">now $5 only</a></span>
+          	<span class="subheading text-warning">Best Price For You</span>
+            <h2 class="mb-4 text-warning">Deal of the day</h2>
+            <p class="text-white">Stay connected and productive with our reliable laptops. Whether for work or leisure,
+               our laptops offer the performance and reliability you can count on.</p>
+            <h3 class="text-muted"><a href="#">APPLE</a></h3>
+            <span class="price text-white">₹ 180000 <a href="#">now ₹ 130000 only</a></span>
             <div id="timer" class="d-flex mt-5">
 						  <div class="time" id="days"></div>
 						  <div class="time pl-3" id="hours"></div>
@@ -238,48 +303,9 @@
                   </div>
                 </div>
               </div>
-              <div class="item">
-                <div class="testimony-wrap p-4 pb-5">
-                  <div class="user-img mb-5" style="background-image: url(/user/images/person_3.jpg)">
-                    <span class="quote d-flex align-items-center justify-content-center">
-                      <i class="icon-quote-left"></i>
-                    </span>
-                  </div>
-                  <div class="text text-center">
-                    <p class="mb-5 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
-                    <span class="position">UI Designer</span>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap p-4 pb-5">
-                  <div class="user-img mb-5" style="background-image: url(/user/images/person_1.jpg)">
-                    <span class="quote d-flex align-items-center justify-content-center">
-                      <i class="icon-quote-left"></i>
-                    </span>
-                  </div>
-                  <div class="text text-center">
-                    <p class="mb-5 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
-                    <span class="position">Web Developer</span>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap p-4 pb-5">
-                  <div class="user-img mb-5" style="background-image: url(/user/images/person_1.jpg)">
-                    <span class="quote d-flex align-items-center justify-content-center">
-                      <i class="icon-quote-left"></i>
-                    </span>
-                  </div>
-                  <div class="text text-center">
-                    <p class="mb-5 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
-                    <span class="position">System Analyst</span>
-                  </div>
-                </div>
-              </div>
+            
+              
+             
             </div>
           </div>
         </div>
@@ -329,6 +355,26 @@
       </div>
     </section>
 
+    
+    <br>
+    <div class="center1">
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+    </div>
+    <br>
+    <br>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 	<script>
         setTimeout(() => {
 
@@ -336,5 +382,41 @@
             
         }, 3000);
     </script>
+
+    <script>
+      function addToCart(productId) {
+        console.log("working");
+        axios
+        .post('/addToCart/' + productId)  // Update the URL pattern to include the productId
+        .then((response) => {
+          if (response.status === 200) {
+          Toastify({
+            text: "Product added successfully",
+            duration: 3000,
+            className: "info",
+            gravity: "bottom",
+            position: "center",
+            style: {
+            background:
+              "linear-gradient(109.6deg, rgba(0, 0, 0, 0.93) 11.2%, rgb(63, 61, 61) 78.9%)",
+            },
+          }).showToast();
+          }
+        })
+        .catch((err) => {
+          Toastify({
+          text: "Product is not added to cart",
+          duration: 3000,
+          className: "info",
+          gravity: "bottom",
+          position: "center",
+          style: {
+            background:
+            "linear-gradient(109.6deg, rgba(0, 0, 0, 0.93) 11.2%, rgb(63, 61, 61) 78.9%)",
+          },
+          }).showToast();
+        });
+      }
+      </script>
 	
 	<%- include('footer') %>

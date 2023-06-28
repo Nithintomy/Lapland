@@ -61,22 +61,25 @@ border:none;
 .dropdown.show .dropdown-menu.fade {
     opacity: 1;
 }
+.search-button {
+  background-color: #dddfe2;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #b6bec7;
+}
 
 </style>
 
 
   <section class="ftco-section">
-	<div class="container">
-		<div class="dropdown d-flex justify-content-end">
-			<button type="button" class="dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">
-				Sort By
-			</button>
-			<div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-				<a class="dropdown-item" href="/shop?sortBy=low-to-high">Price, low to high</a>
-				<a class="dropdown-item" href="/shop?sortBy=high-to-low">Price, high to low</a>
-			</div>
-		</div>
-	</div>
+	
 	
 
 		
@@ -87,24 +90,36 @@ border:none;
 			<div class="row height d-flex justify-content-center align-items-center">
 				
 			  <div class="col-md-6">
-				<div class="form">
-					
+				<div class="form">	
 				  <i class="fa fa-search"></i>
 				  <input type="search" class="form-control form-input" placeholder="Search" name="product" required="" >
-				  
 				  <span class="left-pan"><i class="fa fa-microphone"></i></span>
-				  <input type="submit" value="Search">
-				
 				</div>
 				</div>
+				<span class="input-group-btn">
+					<input type="submit" value="Search" class="search-button">
+				  </span>
 
 			</div>
 
 			
 		  </div>
 		</form>
-		  <br>
-		  <br>
+
+
+
+		  <div class="container">
+			<div class="dropdown d-flex justify-content-end mt-5">
+				<button type="button" class="dropdown-toggle search-button" id="dropdownMenuReference" data-toggle="dropdown">
+					Sort By
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+					<a class="dropdown-item" href="/shop?sortBy=low-to-high">Price, low to high</a>
+					<a class="dropdown-item" href="/shop?sortBy=high-to-low">Price, high to low</a>
+				</div>
+			</div>
+		</div>
+<br>
 
 		
 		  <div class="row justify-content-center">
@@ -129,14 +144,14 @@ border:none;
 				  <div class="product">
 					
 					  <a href="/single_product/<%= product._id %>" class="img-prod"><img class="img-fluid" src="/<%= product.photo[0] %>" alt="Colorlib Template">
-						  <span class="status">30%</span>
+						  <span class="status">15%</span>
 						  <div class="overlay"></div>
 					  </a>
 					  <div class="text py-3 pb-4 px-3 text-center">
 						  <h3><a href="#"><%= product.name %></a></h3>
 						  <div class="d-flex">
 							  <div class="pricing">
-								  <p class="price"><span class="mr-2 price-dc">$120.00</span><span class="price-sale"><%= product.price %></span></p>
+								  <p class="price"><span class="mr-2 price-dc"></span><span class="price-sale">₹ <%= product.price %></span></p>
 							  </div>
 						  </div>
 						  <div class="bottom-area d-flex px-3">
@@ -145,18 +160,26 @@ border:none;
 									  <span><i class="ion-ios-menu"></i></span>
 								  </a>
 								  <% if (locals.User) { %>
-									
-									<button class="buy-now d-flex justify-content-center align-items-center mx-1" onclick="addToCart('<%= product._id %>')">
-									  <span><i class="ion-ios-cart"></i></span>
-									</button>
-								 
+								
+									<a class="buy-now d-flex justify-content-center align-items-center mx-1 btn-transparent" href="#" onclick="addToCart('<%= product._id %>')">
+										<span><i class="ion-ios-cart"></i></span>
+									  </a>
+
+									  <a href="/wishlist/<%= product._id %>" class="heart d-flex justify-content-center align-items-center text-center ">
+										<span><i class="ion-ios-heart"></i></span>
+									</a>
+
 								
 								<% } else { %>
-									<a href="#" ONCLICK="alert('you need to Login first!')" ><i class="ion-ios-cart"></i>
+								
+										<a class="buy-now d-flex justify-content-center align-items-center mx-1 btn-transparent" href="#"  ONCLICK="alert('you need to Login first!')">
+											<span><i class="ion-ios-cart"></i></span>
+										  </a>
+										  <a href="#" class="heart d-flex justify-content-center align-items-center text-center" ONCLICK="alert('you need to Login first!')">
+											<span><i class="ion-ios-heart"></i></span>
+										</a>
 									<% } %>	
-								  <a href="/wishlist/<%= product._id %>" class="heart d-flex justify-content-center align-items-center ">
-									  <span><i class="ion-ios-heart"></i></span>
-								  </a>
+								  
 							  </div>
 						  </div>
 					  </div>

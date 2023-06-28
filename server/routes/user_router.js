@@ -71,7 +71,7 @@ route.post('/api/users',controller.create);
 
 //wishlist 
 
-// route.get('/wishlist',controller.wishlist);
+
 route.get('/wishlist/:id',controller.addTowishlist)
 route.get('/viewWishlist',controller.viewWishlist)
 route.get('/deleteWishlist/:id',controller.deleteWishlist)

@@ -104,6 +104,37 @@
         </div>
     </div>
 
+    <br>
+   <!-- Pagination -->
+<div class="row mt-5">
+    <div class="col text-center">
+      <div class="block-27">
+        <ul>
+          <% if (currentPage > 1) { %>
+            <li><a href="/order/<%= id %>?page=<%= currentPage - 1 %>">&lt;</a></li>
+          <% } %>
+    
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <% if (i === currentPage) { %>
+              <li class="active"><span><%= i %></span></li>
+            <% } else { %>
+              <li><a href="/order/<%= id %>?page=<%= i %>"><%= i %></a></li>
+            <% } %>
+          <% } %>
+    
+          <% if (currentPage < totalPages) { %>
+            <li><a href="/order/<%= id %>?page=<%= currentPage + 1 %>">&gt;</a></li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- End Pagination -->
+  <br>
+
+
+    
+
     <% } else { %>
         <div class="container-fluid  mt-100">
             <div class="row">
@@ -125,8 +156,7 @@
                            </div>
                    </div>
            </div>
-                   
-               
+ 
                </div>
             
             </div>
@@ -134,30 +164,11 @@
            </div>
         <% } %>
 
+        <br>
+
 	<!-- //order -->
 
 
-    <div class="col text-center">
-        <div class="block-27">
-          <ul>
-            <% if (currentPage > 1) { %>
-              <li><a href="/orders?page=<%= currentPage - 1 %>">&lt;</a></li>
-            <% } %>
-      
-            <% for (let i = 1; i <= totalPages; i++) { %>
-              <% if (i === parseInt(currentPage)) { %>
-                <li class="active"><span><%= i %></span></li>
-              <% } else { %>
-                <li><a href="/orders?page=<%= i %>"><%= i %></a></li>
-              <% } %>
-            <% } %>
-      
-            <% if (currentPage < totalPages) { %>
-              <li><a href="/orders?page=<%= parseInt(currentPage) + 1 %>">&gt;</a></li>
-            <% } %>
-          </ul>
-        </div>
-      </div>
-
+  
 
     <%- include('footer') %>

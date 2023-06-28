@@ -323,12 +323,7 @@
 	  <p class="d-flex">
 		<span>Discount</span>
 		<span>₹<%= cart.discount.toFixed(2) %></span>
-		<% if (cart.discount) { %>
-		 
-		  <a class="btn btn-custom-danger delete-btn" href="/deleteCoupon/<%= cart.discount._id %>">
-		   <span class="delete-icon">&times;</span> Remove
-		 </a>
-		<% } %>
+		
 	  </p>
 	  <% if (discountMsg) { %>
 		<span><%= discountMsg %></span>
@@ -346,9 +341,6 @@
 	  </p>
 	</div>
   </div>
-  
-
-
 					  </div>
 					</div> <!-- .col-md-8 -->
 				  </div>

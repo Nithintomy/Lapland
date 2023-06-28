@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Razorpay Success</title>
+</head>
+<body>
+  <h1>Payment Successful</h1>
+  <p>Thank you for your purchase!</p>
+  <h2>Order Details</h2>
+  <p>Order ID: <%= order.order_id %></p>
+  <p>Amount Paid: <%= order.amount / 100 %> INR</p>
+  <h2>User Details</h2>
+  <p>Name: <%= order.user_data.name %></p>
+  <p>Email: <%= order.user_data.email %></p>
+  <p>Contact: <%= order.user_data.contact %></p>
+</body>
+</html>

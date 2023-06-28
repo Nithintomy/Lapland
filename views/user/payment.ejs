@@ -161,15 +161,15 @@
 
                           <div id="wallet" class="tab-pane fade pt-3">
                             <h6 class="pb-2">Pay using Wallet</h6>
-                           <label for="">Pay only ₹ <%=subtotal%> Using Wallet <p class="text-info">Details</p></label>
-                           <form action="/placeOrder/<%= address._id%>" method="post">
-                           <button type="submit" name="payment_method" value="wallet" id="wallet" class="btn btn-info"><i class="tab-pane fade mr-2"></i>Pay Now</button> 
-                        </form>
-                           
-                        </div> <!-- End -->
-                          
-                          <!-- End -->
-                     
+                            <label for="">Pay only ₹ <%=subtotal%> Using Wallet <p class="text-info">Details</p></label>
+                            <form action="/placeOrder/<%= address._id%>" method="post">
+                              <% if (balance && balance >= subtotal) { %> <!-- Check if balance exists and is sufficient -->
+                                <button type="submit" name="payment_method" value="wallet" id="wallet" class="btn btn-info"><i class="tab-pane fade mr-2"></i>Pay Now</button> 
+                              <% } else { %> <!-- Insufficient balance condition or balance doesn't exist -->
+                                <p>Insufficient balance. Please choose another payment method.</p>
+                              <% } %>
+                            </form>
+                          </div> <!-- End -->
                         
                           
                           

@@ -56,13 +56,12 @@
 				<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
 				<div class="dropdown-menu" aria-labelledby="dropdown04">
 				  <a class="dropdown-item" href="/shop">Shop</a>
-				  <a class="dropdown-item" href="/viewWishlist">Wishlist</a>
-				
+				  <a class="dropdown-item" href="/blog">Blog</a>
 				</div>
 			  </li>
 			  <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
-			  <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
 			  <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+			  <li class="nav-item"><a href="/viewWishlist" class="nav-link">Wishlist<i class="fa-regular fa-heart fa-1x ml-2"></i></a></li>
 	  
 			  <% if (locals.User) { %>
 			 
@@ -75,6 +74,7 @@
 	    
 			  <% if (locals.User) { %>
 			  <% if (User.isLogedin) { %>
+				
 			  <li class="nav-item mt-3 ml-5 "><a href="/profile/<%-User._id%>"><i class="fa-regular fa-user fa-2x" ></i></a></li>
 			  <form action="/log_out/<%= User._id%>" method="post">
 				<li><button type="submit" class="btn log_out mt-3 ml-5 text-danger ">Logout</button></li>

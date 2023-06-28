@@ -47,7 +47,16 @@
 									</span>
 
 								  </div>
-								  <div class="enthelum" id="remains_<%= product.productId._id %>"><span><%=(product.productId.quantity-product.quantity)%></span></div>
+								  <div class="enthelum" id="remains_<%= product.productId._id %>" data-remaining-quantity="<%= (product.productId.quantity - product.quantity) %>">
+									<% if (product.productId.quantity - product.quantity <= 5 && (product.productId.quantity - product.quantity) > 0) { %>
+									  <span class="text-danger">Only <%= (product.productId.quantity - product.quantity) %> left!</span>
+									<% } else if ((product.productId.quantity - product.quantity) === 0) { %>
+									  <span class="text-danger">Out of stock</span>
+									<% } else { %>
+									  <span><%= (product.productId.quantity - product.quantity) %></span>
+									<% } %>
+								  </div>
+								
 												
 								</td>
 								<% var total = product.quantity * product.productId.price %>
@@ -148,21 +157,36 @@
   setSubtotal();
 
   $('.quantity-left-minus').click(function() {
-    const cartItemId = $(this).attr('id').split('_')[1];
-    decrementQuantity(cartItemId);
-  });
+  const cartItemId = $(this).attr('id').split('_')[1];
+  decrementQuantity(cartItemId);
+});
 
-  $('.quantity-right-plus').click(function() {
-    const cartId = $(this).attr('id').split('_')[1];
-    incrementQuantity(cartId);
-  });
+$('.quantity-right-plus').click(function() {
+  const cartId = $(this).attr('id').split('_')[1];
+  incrementQuantity(cartId);
+});
 
-  function incrementQuantity(cartId) {
-	const remain = document.getElementById(`remains_${cartId}`);
-	if (remain.innerText == "out of stock") {
-				alert("Out of stock ")
-             }else{
-				 $.ajax({
+function updateRemainingStock(cartId) {
+  const remain = document.getElementById(`remains_${cartId}`);
+  const remainingQuantity = parseInt(remain.dataset.remainingQuantity);
+
+  if (remainingQuantity > 0) {
+    if (remainingQuantity <  5) {
+      remain.innerHTML = `<span class="text-danger">Only ${remainingQuantity} left!</span>`;
+    } else {
+      remain.innerText = remainingQuantity;
+    }
+  } else {
+    remain.innerHTML = `<span class="text-danger">Out of stock</span>`;
+  }
+}
+
+function incrementQuantity(cartId) {
+  const remain = document.getElementById(`remains_${cartId}`);
+  if (remain.innerText === "Out of stock") {
+    alert("Out of stock");
+  } else {
+    $.ajax({
       url: "/incrementQuantity",
       method: "POST",
       data: { cartId: cartId },
@@ -170,7 +194,8 @@
         if (data.success) {
           $(`#product-total-price-${cartId}`).text(`₹ ${data.total}`);
           $(`#quantity_${cartId}`).val(data.quantity);
-		  $(`#remains_${cartId}`).text(data?.mess);
+          remain.dataset.remainingQuantity = data.mess;
+          updateRemainingStock(cartId);
           setSubtotal();
         } else {
           console.log('Error while updating');
@@ -180,31 +205,32 @@
         console.log('Error:', textStatus, errorThrown);
       }
     });
-			 }
-   
   }
+}
 
-  function decrementQuantity(cartItemId) {
-    var currentQuantity = parseInt($(`#quantity_${cartItemId}`).val());
-    if (currentQuantity > 1) {
-      $.ajax({
-        url: "/decrementQuantity",
-        method: "post",
-        data: { cartItemId: cartItemId },
-        success: function(data) {
-          $(`#product-total-price-${cartItemId}`).text(`₹ ${data.total}`);
-          $(`#quantity_${cartItemId}`).val(data.quantity);
-		  $(`#remains_${cartItemId}`).text(data?.mess);
-          setSubtotal();
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-          console.log('Error:', textStatus, errorThrown);
-        }
-      });
-    } else {
-      $(`#quantity_${cartItemId}`).val(1);
-    }
+function decrementQuantity(cartItemId) {
+  var currentQuantity = parseInt($(`#quantity_${cartItemId}`).val());
+  if (currentQuantity > 1) {
+    $.ajax({
+      url: "/decrementQuantity",
+      method: "post",
+      data: { cartItemId: cartItemId },
+      success: function(data) {
+        $(`#product-total-price-${cartItemId}`).text(`₹ ${data.total}`);
+        $(`#quantity_${cartItemId}`).val(data.quantity);
+        const remain = document.getElementById(`remains_${cartItemId}`);
+        remain.dataset.remainingQuantity = data.mess;
+        updateRemainingStock(cartItemId);
+        setSubtotal();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log('Error:', textStatus, errorThrown);
+      }
+    });
+  } else {
+    $(`#quantity_${cartItemId}`).val(1);
   }
+}
 });
 
 	  </script>
