@@ -32,7 +32,13 @@
                                               </span>
                                             </td>
                                             <td><%= product.price %></td>
-                                            <td><%= product.quantity %></td>
+                                            <td>
+                                              <% if (product.quantity < 1) { %>
+                                                Out of Stock
+                                              <% } else { %>
+                                                <%= product.quantity %>
+                                              <% } %>
+                                            </td>
                                             <td><%= product.category_name %></td>
                                             <td>
                                             

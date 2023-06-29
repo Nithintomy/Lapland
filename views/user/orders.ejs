@@ -2,6 +2,9 @@
 
 
 
+</style>
+
+
 	<!-- order -->
     <% if (locals.order_data) { %>
     <div class="col-12">
@@ -54,13 +57,13 @@
                             </td>
 							<td> <div>
                                                     
-								<a type="submit" href="/order_detail/<%= orders._id %>" class="btn btn-light">Details</a>
+								<a type="submit" href="/order_detail/<%= orders._id %>" class="button-71">Details</a>
 							</div></td>
                             <td>
                                 <%	if (orders.status==="cancelled") {%> 
                                     <%= orders.status%>
                                     <%} else if(orders.status==="Delivered"){%>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Return<%=orders._id %>">
+                                        <button type="button" class="button-73" data-toggle="modal" data-target="#Return<%=orders._id %>">
                                             Return
                                           </button>
                                           <!-- Modal -->
@@ -88,7 +91,7 @@
                                     <% }else { %>
                                 <div>
                                     <form action="/order_cancel/<%= orders._id %>" method="post">
-                                          <button type="submit" value="cancelled" class="btn btn-danger">Cancel</button>
+                                          <button type="submit" value="cancelled" class="button-72">Cancel</button>
                                     </form>
                                 </div>
                                 <% } %>	

@@ -2,16 +2,17 @@
 
 
 
-<a href="/invoice/<%=order_data._id%>" type="submit" class="btn "> Download Invoice</a>
-  <!-- Widgets Start -->
-  <div class="container-fluid orderdetaibg pt-4 px-4">
+<div class="container-fluid orderdetaibg pt-4 px-4">
     <div class="row g-4">
-        <div class="col-sm-12 col-md-6 col-xl-12">
-            <div class="h-100 bg-dark text-white rounded p-4">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <h3 class="mb-0 text-success">Products Details</h3>
-                </div>
-                <div class="table-responsive">
+      <div class="col-sm-12 col-md-6 col-xl-12">
+        <div class="h-100 bg-dark text-white rounded p-4">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h3 class="mb-0 text-success">Products Details</h3>
+            <div class="text-end ">
+              <a href="/invoice/<%=order_data._id%>" type="submit" class="button-70">Download Invoice</a>
+            </div>
+          </div>
+          <div class="table-responsive">
                     <table class="table">
                         <thead class="orderhead">
                             <tr>
@@ -48,10 +49,9 @@
                     </table>
                 </div>
             </div>
+          </div>
         </div>
-        
-
-    </div>
+      </div>
     <br>
     <br>
     <div class="col-sm-12 col-md-6 col-xl-12">
@@ -71,7 +71,7 @@
               <p class="text-primary">Billing Address</p>
             <div class="orderadd ">
                 <ul class="payment_address">
-                    <li>Fullname: <span><%= order_data.address.name %> </span></li>       
+                    <li>Fullname: <span><%= order_data.user.name %> </span></li>       
                     <li>Address: <span><%= order_data.address.address %> </span></li>       
                     <li>Phone No: <span><%= order_data.address.phone %> </span></li>       
                     <li>Pincode: <span><%= order_data.address.pincode %> </span></li>       
