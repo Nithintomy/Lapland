@@ -62,8 +62,9 @@ route.get('/paypal_err',controller.paypal_err)
 
 route.get('/profile',controller.profilePage)
 route.get('/profile/:id',controller.profilePage)
+route.get('/profileAddressdelete/:addressId',controller.profileAddressDelete)
 route.post('/edit_address/:id',controller.updateProfile)
-route.post('/update-profile-picture',controller.updateProfilePicture)
+
 
 //login
 route.post('/login',controller.find_user);

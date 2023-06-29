@@ -469,7 +469,14 @@ exports.placeOrder = async (req, res) => {
         };
       });
 
-      console.log(items);
+      items.forEach(async(item) => {
+      
+        const pro= await productSchema.findById(item.product)
+  
+        const quan=pro.quantity-item.quantity
+        await productSchema.findByIdAndUpdate(item.product,{quantity:quan})
+      });
+  
 
       let totalPrice = cartdisc.total - cartdisc.discount;
       console.log(totalPrice, "book now");
@@ -830,37 +837,56 @@ exports.userCart = async (req, res) => {
 exports.addToCart = async (req, res) => {
   try {
     const userId = req.session.user?._id;
-
     const productId = req.params.id;
+    const product_data = await productSchema.findById(productId);
 
-    let userCart = await cartSchema.findOne({ userId: userId });
-    if (!userCart) {
-      const newCart = await new cartSchema({ userId: userId, products: [] });
-      await newCart.save();
-
-      userCart = newCart;
-    }
-
-    const productIndex = userCart?.products.findIndex(
-      (product) => product.productId == productId
-    );
-
-    if (productIndex === -1) {
-      userCart.products.push({ productId, quantity: 1 });
+    if (product_data.quantity < 1) {
+      return res.json({
+        status: "success",
+        message: "out of stock",
+      });
     } else {
-      userCart.products[productIndex].quantity += 1;
+      let userCart = await cartSchema.findOne({ userId: userId });
+
+      if (!userCart) {
+        const newCart = await new cartSchema({ userId: userId, products: [] });
+        await newCart.save();
+        userCart = newCart;
+      }
+
+      const productIndex = userCart?.products.findIndex(
+        (product) => product.productId == productId
+      );
+
+      if (productIndex === -1) {
+        // If the product is not in the cart, add it
+        userCart.products.push({ productId, quantity: 1 });
+      } else {
+        if (product_data.quantity <= userCart.products[productIndex].quantity) {
+          return res.json({
+            status: "success",
+            message: "out of stock",
+          });
+        } else {
+          // If the product is already in the cart, increase its quantity by 1
+          userCart.products[productIndex].quantity += 1;
+        }
+      }
+
+      await userCart.save();
+
+      res.json({
+        status: "success",
+        message: "added to cart",
+      });
+
+      res.redirect(userCart.products.length > 0 ? "/viewcart" : "/empty_cart");
     }
-
-    await userCart.save();
-
-  
-   
-    res.redirect(userCart.products.length > 0 ? '/viewcart' : '/empty_cart');
-
   } catch (error) {
     console.log(error);
   }
 };
+
 
 exports.deleteCartItem = async (req, res) => {
   try {
@@ -1289,27 +1315,27 @@ exports.updateProfile = async (req,res)=>{
   }
 }
 
-// Update the profile picture route
-exports.updateProfilePicture = async (req, res) => {
+exports.profileAddressDelete = async (req, res) => {
   try {
+    const addressId = req.params.addressId;
+    console.log(addressId);
     const userId = req.session.user?._id;
-    const { file } = req;
+    console.log(userId);
+    const address = await UserSchema.findOneAndUpdate(
+      { _id: userId },
+      { $pull: { address: { _id: addressId } } },
+      { new: true }
+    );
+   
 
-    if (!file) {
-      res.status(400).send('No image file provided.');
-      return;
+    if (address) {
+      res.redirect("/profile");
+    } else {
+      console.log("Address not deleted");
+      res.redirect("/profile");
     }
-
-    // Update the user document with the path to the uploaded image
-    const user = await UserSchema.findOne({ _id: userId });
-    user.profilePicture = file.path;
-    await user.save();
-
-    res.redirect('/profile');
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
+    console.log(error);
+    res.status(500).send("Server Error");
   }
 };
-
-
