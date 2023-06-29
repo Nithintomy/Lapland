@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="/user/css/style.css">
 	<link rel="stylesheet" href="/user/css/button.css">
     <link rel="stylesheet" href="/public/user/css/addressShow.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.css">
     	<!-- SweetAlert CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
@@ -66,12 +67,12 @@
 	  
 			  <% if (locals.User) { %>
 			 
-			  <li class="nav-item"><a href="/order/<%= User._id %>" class="nav-link">Orders</a></li>
-			
-			  <li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-			  <% } else { %>
-			  <li class="nav-item cta cta-colored"><a href="/login" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-			  <% } %>
+				<li class="nav-item"><a href="/order/<%= User._id %>" class="nav-link">Orders</a></li>
+			  
+				<li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+				<% } else { %>
+				<li class="nav-item cta cta-colored"><a href="/login" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+				<% } %>
 	    
 			  <% if (locals.User) { %>
 			  <% if (User.isLogedin) { %>

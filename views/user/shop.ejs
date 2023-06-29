@@ -81,7 +81,7 @@ border:none;
   <section class="ftco-section">
 	
 	
-
+	<div class="container">
 		
 		
 		<form action="/search_product" method="post">
@@ -122,23 +122,23 @@ border:none;
 <br>
 
 		
-		  <div class="row justify-content-center">
-		
-			  <div class="col-md-10 mb-5 text-center">
-				  <ul class="product-category">
-					<li><a href="/shop" class="active">All</a></li>
-					<% Category.forEach(function(Category) { %>	
-					  <li><a href="/filter/<%= Category._id %>" class="active"><%= Category.category %></a></li>
+			<div class="row justify-content-center">
+			<div class="col-md-10 mb-5 text-center">
+				<ul class="product-category list-unstyled">
+				<li><a href="/shop" class="active">All</a></li>
+				<% Category.forEach(function(Category) { %>
+					<li><a href="/filter/<%= Category._id %>" class="active"><%= Category.category %></a></li>
+				<% }); %>
+				</ul>
+			</div>
+			</div>
 
-					<% }); %>
-				  </ul>
-			  </div>
-		  </div>
 		
 			
 		  <div class="row">
 			<% if (products.length > 0) { %>
-				<% products.forEach(function(product) { %>
+			  <% products.forEach(function (product) { %>
+					
 			  <div class="col-md-6 col-lg-3 ftco-animate">
 			
 				  <div class="product">
@@ -189,14 +189,14 @@ border:none;
 			  </div>
 			  <% }); %>
 			  <% } else { %>
-				<p>No products found.</p>
+				<p class="text-center pl-5 text-danger">No products found</p>
 			  <% } %>
-			  
+			</div>
 			  
 			  
 
 
-		  </div>
+		  
 		  <div class="row mt-5">
 			<div class="col text-center">
 				<div class="block-27">
@@ -219,8 +219,9 @@ border:none;
 				  </ul>
 				</div>
 			  </div>
-			  
-  </section>
+			</div>
+		</div>
+       </section>
 
 		<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
       <div class="container py-4">
@@ -248,41 +249,48 @@ border:none;
         }, 3000);
     </script>
 	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-	<script>
-		function addToCart(productId) {
-		  console.log("working");
-		  axios
-			.post('/addToCart/' + productId)  // Update the URL pattern to include the productId
-			.then((response) => {
-			  if (response.status === 200) {
-				Toastify({
-				  text: "Product added successfully",
-				  duration: 3000,
-				  className: "info",
-				  gravity: "bottom",
-				  position: "center",
-				  style: {
-					background:
-					  "linear-gradient(109.6deg, rgba(0, 0, 0, 0.93) 11.2%, rgb(63, 61, 61) 78.9%)",
-				  },
-				}).showToast();
-			  }
-			})
-			.catch((err) => {
-			  Toastify({
-				text: "Product is not added to cart",
-				duration: 3000,
-				className: "info",
-				gravity: "bottom",
-				position: "center",
-				style: {
-				  background:
-					"linear-gradient(109.6deg, rgba(0, 0, 0, 0.93) 11.2%, rgb(63, 61, 61) 78.9%)",
-				},
-			  }).showToast();
-			});
-		}
-	  </script>
+<!-- Add this script after including the Toastify library -->
+<script>
+	function addToCart(productId) {
+  axios
+    .post('/addToCart/' + productId)
+    .then(function (response) {
+      if (response.data.message === 'added to cart') {
+        // Show success toast notification
+        Toastify({
+          text: 'Product added to cart',
+          duration: 3000,
+          gravity: 'bottom',
+          position: 'center',
+          backgroundColor: '#36ab60',
+          stopOnFocus: true,
+        }).showToast();
+      } else if (response.data.message === 'out of stock') {
+        // Show out of stock toast notification
+        Toastify({
+          text: 'Product is out of stock',
+          duration: 3000,
+          gravity: 'bottom',
+          position: 'center',
+          backgroundColor: '#f44336',
+          stopOnFocus: true,
+        }).showToast();
+      }
+    })
+    .catch(function (error) {
+      // Show error toast notification
+      Toastify({
+        text: 'Failed to add product to cart',
+        duration: 3000,
+        gravity: 'bottom',
+        position: 'center',
+        backgroundColor: '#f44336',
+        stopOnFocus: true,
+      }).showToast();
+    });
+}
+  </script>
+  
 
 
 	<%- include('footer') %>

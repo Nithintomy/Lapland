@@ -991,14 +991,17 @@ exports.decrementQuantity = async (req, res) => {
 
 
 
-//order page
+// order page
 exports.order_details = async (req, res) => {
   const User = req.session.user;
   try {
     const id = req.params.id;
-    const order_data = await order_model.find({ user: id })
+    const order_data = await order_model
+      .find({ user: id })
       .populate("items.product")
-      .populate("items.quantity");
+      .populate("items.quantity")
+      // Sort the orders in descending order based on the createdAt property
+      .sort({ createdAt: -1 }); 
 
     const page = parseInt(req.query.page) || 1;
     const itemsPerPage = 10;
@@ -1014,6 +1017,7 @@ exports.order_details = async (req, res) => {
     res.send({ message: error.message });
   }
 };
+
 
 
 
@@ -1075,7 +1079,7 @@ exports.search_product = async (req, res) => {
     if (products.length > 0) {
       res.render('shop', { User, Category, product, products, totalPages, currentPage: page });
     } else {
-      res.render('shop', { User, Category, product, message: "There are no products" });
+      res.render('shop', { User, Category, product, products, totalPages, currentPage: page  });
     }
   } catch (error) {
     console.error(error);

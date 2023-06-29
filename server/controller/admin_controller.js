@@ -394,15 +394,22 @@ exports.addproduct = async (req, res) => {
 };
 
 // get order page
- exports.order_status = async (req, res) => {
-  const admin = req.session.user
-  if(!admin){
-    res.redirect('/admin')
+exports.order_status = async (req, res) => {
+  const admin = req.session.user;
+  if (!admin) {
+    res.redirect("/admin");
   }
   try {
-    const order_data = await orderSchema.find().populate("user").populate("items.product").populate("items.quantity")
+    const order_data = await orderSchema
+      .find()
+      .populate("user")
+      .populate("items.product")
+      .populate("items.quantity");
 
-    res.render("order_status", {order_data });
+    // Reorder the order_data array in descending order based on the createdAt property
+    order_data.sort((a, b) => b.createdAt - a.createdAt);
+
+    res.render("order_status", { order_data });
   } catch (error) {
     console.error(error);
     res.send({ message: error.message });

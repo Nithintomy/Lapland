@@ -113,10 +113,14 @@
                                               <% } %>
                                             <% } else if (orders.payment_method === "paypal" || orders.payment_method === "Razorpay" || orders.payment_method === "wallet") { %>
                                               <% if (orders.status === "cancelled" || orders.status === "Returned") { %>
-                                                <div>
+                                               
                                                   <form action="/order_refund/<%= orders._id %>" method="post">
                                                     <button type="submit" value="Refunded" class="btn btn-danger">Refund</button>
                                                   </form>
+                                                  <% if (orders.status === "Returned" && orders.reason) { %>
+                                                    <p>Reason for Return: <%= orders.reason %></p>
+                                                    <% } %>
+                                                  <div>
                                                 </div>
                                               <% } %>
                                             <% } %>
