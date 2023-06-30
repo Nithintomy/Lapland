@@ -14,6 +14,10 @@ var productSchema=new mongoose.Schema({
        
        
     },
+    offer:{
+        type:Number,
+       
+    },
     quantity:{
         type:Number,
         require:true,

@@ -1,0 +1,78 @@
+.address-item {
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .address-item:hover {
+    background-color: #f9f9f9;
+    transform: translateY(-2px);
+    box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .address-details {
+    color: #000000;
+  }
+
+  .address-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .address-info {
+    display: block;
+    margin-bottom: 3px;
+  }
+  .address-head {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  /* paynow button */
+
+  .button-69 {
+    appearance: none;
+    background-color:  #93969c;
+    border-radius: 40em;
+    border-style: none;
+    box-shadow:  #a4a7ac 0 -12px 6px inset;
+    box-sizing: border-box;
+    color: #000000;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system,sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -.24px;
+    margin: 0;
+    outline: none;
+    padding: 1rem 1.3rem;
+    quotes: auto;
+    text-align: center;
+    text-decoration: none;
+    transition: all .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-69:hover {
+    background-color: #8a8d92;
+    box-shadow: #515357  0 -6px 8px inset;
+    transform: scale(1.000);
+  }
+  
+  .button-69:active {
+    transform: scale(1.000);
+  }
+  
+  @media (min-width: 768px) {
+    .button-69 {
+      font-size: 15px;
+      padding: .75rem 2rem;
+    }
+  }

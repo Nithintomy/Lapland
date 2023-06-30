@@ -253,9 +253,9 @@ border:none;
 <script>
 	function addToCart(productId) {
   axios
-    .post('/addToCart/' + productId)
+    .post('/addToCart/' + productId + "?page=shop")
     .then(function (response) {
-      if (response.data.message === 'added to cart') {
+      if (response.data.message === 'Added to cart') {
         // Show success toast notification
         Toastify({
           text: 'Product added to cart',

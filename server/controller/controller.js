@@ -152,10 +152,15 @@ exports.single_product = async (req, res) => {
 
     const User = req.session.user;
 
+    let userCart;
+    if (User) {
+      userCart = await cartSchema.findOne({ userId: User._id });
+    }
+
     const products = await productSchema.find().skip(4).limit(4);
     console.log(products,"products here")
-
-    res.render('single_product', { User, product, products:products|| [] });
+    console.log(product.quantity,"ffsfefe")
+    res.render('single_product', { User,userCart, product, products:products|| [] });
   } catch (error) {
     console.log(error);
     res.status(500).send('Internal Server Error');
@@ -874,13 +879,14 @@ exports.addToCart = async (req, res) => {
       }
 
       await userCart.save();
-
-      res.json({
-        status: "success",
-        message: "added to cart",
-      });
-
+      if (req.query.page === "shop") {
+        return res.json({
+          status: "success",
+          message: "Added to cart",
+        });
+      }else{
       res.redirect(userCart.products.length > 0 ? "/viewcart" : "/empty_cart");
+      }     
     }
   } catch (error) {
     console.log(error);

@@ -64,13 +64,16 @@
 </div>
 
 <% if (product.quantity > 0) { %>
-  <% if (product.quantity <= 5) { %>
-    <p>Only <%= product.quantity %> left</p>
-  <% } %>
+
   <% if (locals.User) { %>
+    <% const cartProduct = userCart?.products.find(p => p.productId.toString() === product._id.toString()); %>
+    <% if (cartProduct && cartProduct.quantity > 0) { %>
+      <p class="text-danger">Out of Stock</p>
+      <%} else { %>
     <form action="/addToCart/<%= product._id %>" method="post">
       <button class="btn btn--green  px-5" type="submit">Add to Cart</button>
     </form>
+    <% } %>
   <% } else { %>
     <form action="/login" method="get">
       <button class="btn btn--green   px-5" type="submit">Add to Cart</button>
@@ -261,6 +264,40 @@ function decrementQuantity(cartItemId) {
 
 
 </script>
+<script>
+function addToCart(productId) {
+  axios
+    .post('/addToCart/' + productId + "?page=single_product")
+    .then(function (response) {
+      if (response.data.message === 'out of stock') {
+        // Show out of stock toast notification
+        Toastify({
+          text: 'Product is out of stock',
+          duration: 3000,
+          gravity: 'bottom',
+          position: 'center',
+          backgroundColor: '#f44336',
+          stopOnFocus: true,
+        }).showToast();
+      } else {
+        // Redirect to cart page
+        window.location.href = '/viewcart';
+      }
+    })
+    .catch(function (error) {
+      // Show error toast notification
+      Toastify({
+        text: 'Failed to add product to cart',
+        duration: 3000,
+        gravity: 'bottom',
+        position: 'center',
+        backgroundColor: '#f44336',
+        stopOnFocus: true,
+      }).showToast();
+    });
+}
+</script>
+  
 
 
 </section>

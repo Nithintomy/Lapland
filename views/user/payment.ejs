@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="/user/css/flaticon.css">
     <link rel="stylesheet" href="/user/css/icomoon.css">
     <link rel="stylesheet" href="/user/css/style.css">
-    <link rel="stylesheet" href="/user/css/addressShow.css">
+    <link rel="stylesheet" href="/user/css/paymentaddress.css">
+   
 
 
 
@@ -32,6 +33,11 @@
     
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
   </head>
+<style>
+    .nav-link {
+    color: black !important;
+  }
+</style>
   
   <body class="goto-here">
 		
@@ -104,7 +110,7 @@
         <!-- For demo purpose -->
         <div class="row mb-4">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-6 mt-3" style="font-family: Arial Rounded MT Bold">Payment Methods</h1>
+                <h3 class="display-6 mt-3 address-head" >Payment Methods</h3>
             </div>
         </div> <!-- End -->
         <div class="row">
@@ -113,11 +119,11 @@
                     <div class="card-header">
                         <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
                             <!-- Credit card form tabs -->
-                            <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3 text-info">
+                            <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3 text-black">
                                 <li class="nav-item"> <a data-toggle="pill" href="#cod" class="nav-link "> <i class="fas fa-money-bill-wave mr-2"></i> Cash on Delivery </a> </li>
                                 <li class="nav-item"> <a data-toggle="pill" href="#paypal" class="nav-link "> <i class="fab fa-paypal mr-2"></i> Paypal </a> </li>
                                 <li class="nav-item"> <a data-toggle="pill" href="#razorpay" class="nav-link "> <i class="fab fa-cc-stripe mr-2"></i> Razorpay </a> </li>
-                                <li class="nav-item"> <a data-toggle="pill" href="#wallet" class="nav-link "> <i class="fa-solid fa-wallet"></i>Wallet</a> </li>
+                                <li class="nav-item"> <a data-toggle="pill" href="#wallet" class="nav-link "> <i class="fas fa-wallet mr-2"></i>Wallet</a> </li>
                                
                             </ul>
                         </div> <!-- End -->
@@ -127,8 +133,9 @@
                                 <h6 class="pb-2">Pay using COD</h6>
                                <label for="">Pay only ₹ <%=subtotal%> as cash on delivery <p class="text-info">Details</p></label>
                                <form action="/placeOrder/<%= address._id%>" method="post">
-                               <button type="submit" name="payment_method" value="COD" id="COD" class="btn btn-info"><i class="tab-pane fade mr-2"></i>Pay Now</button> 
+                               <button type="submit" name="payment_method" value="COD" id="COD" class="button-69"><i class="tab-pane fade mr-2"></i>Pay Now</button> 
                             </form>
+                            <br>
                                 <p class="text-muted"> Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
                             </div> <!-- End -->
                            
@@ -137,10 +144,11 @@
                             <h6 class="pb-2">Select your paypal account type</h6>
                             <div class="form-group "> <label class="radio-inline"> <input type="radio" name="optradio" id="paypalRadio" checked> Domestic </label> <label class="radio-inline"> <input type="radio" name="optradio" class="ml-5">International </label></div>
                             <form action="/placeOrder/<%= address._id%>" method="post">
-                                <button type="submit" value="paypal" name="payment_method" id="paypalButton" class="btn btn-info">
+                                <button type="submit" value="paypal" name="payment_method" id="paypalButton" class="button-69">
                                     <i class="fab fa-paypal mr-2"></i> Log into my Paypal
                                 </button>
                         </form>
+                        <br>
                             <p class="text-muted"> Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
                         </div> <!-- End -->
                         
@@ -150,10 +158,11 @@
                          
                             <form  id="razorpayForm">
                                 <input type="hidden" value="razorpay" name="payment_method" >
-                                <button type="submit"  class="btn btn-info">
+                                <button type="submit"  class="button-69">
                                     <i class="fab fa-cc-stripe mr-2"></i> Pay with Razorpay
                                 </button>
                             </form>
+                            <br>
                             <p class="text-muted">
                               Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order.
                             </p>
@@ -161,10 +170,10 @@
 
                           <div id="wallet" class="tab-pane fade pt-3">
                             <h6 class="pb-2">Pay using Wallet</h6>
-                            <label for="">Pay only ₹ <%=subtotal%> Using Wallet <p class="text-info">Details</p></label>
+                            <label for="">Pay only ₹ <%=subtotal%> Using Wallet <i class="fas fa-wallet mr-2"></i><p class="text-info">Details</p></label>
                             <form action="/placeOrder/<%= address._id%>" method="post">
                               <% if (balance && balance >= subtotal) { %> <!-- Check if balance exists and is sufficient -->
-                                <button type="submit" name="payment_method" value="wallet" id="wallet" class="btn btn-info"><i class="tab-pane fade mr-2"></i>Pay Now</button> 
+                                <button type="submit" name="payment_method" value="wallet" id="wallet" class="button-69">Pay Now</button> 
                               <% } else { %> <!-- Insufficient balance condition or balance doesn't exist -->
                                 <p>Insufficient balance. Please choose another payment method.</p>
                               <% } %>
@@ -182,7 +191,7 @@
             </div>
 
             <ul class="address-list list-group">
-              <h3>Billing Address</h3> 
+              <h5 class="address-head ">Billing Address</h5> 
                 
                   <li class="address-item list-group-item" >
                     <div class="address-details">
