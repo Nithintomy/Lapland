@@ -12,7 +12,7 @@ const walletSchema =require('../model/wallet_model')
 const Wishlist = require('../model/wishlist');
 const paypal=require('paypal-rest-sdk')
 const Razorpay = require("razorpay");
-
+const crypto = require('crypto')
 const { RAZORPAY_ID_KEY, RAZORPAY_SECRET_KEY } = process.env;
 
 const razorpay = new Razorpay({
@@ -132,7 +132,7 @@ exports.deleteAddress = async (req, res) => {
 exports.single_product = async (req, res) => {
   try {
     const product_id = req.params.id;
-    console.log(product_id);
+
     if (!mongoose.Types.ObjectId.isValid(product_id)) {
       return res.status(400).send('Invalid product ID');
     }
@@ -143,29 +143,36 @@ exports.single_product = async (req, res) => {
       return res.status(404).send('Product not found');
     }
 
-    // Check stock availability for the product
-    if (product.quantity <= 0) {
-      // If stock is empty, mark the product as out of stock
-      product.outOfStock = true;
-      await product.save(); // Update the product in the database
-    }
-
     const User = req.session.user;
 
     let userCart;
     if (User) {
       userCart = await cartSchema.findOne({ userId: User._id });
+
+      if (userCart) {
+        const productInCart = userCart.products.find(
+          (product) => product.productId.toString() === product_id
+        );
+
+        if (productInCart) {
+          const cartProduct = await productSchema.findById(productInCart.productId);
+
+          if (cartProduct.quantity <= 0) {
+            product.outOfStock = true;
+          }
+        }
+      }
     }
 
     const products = await productSchema.find().skip(4).limit(4);
-    console.log(products,"products here")
-    console.log(product.quantity,"ffsfefe")
-    res.render('single_product', { User,userCart, product, products:products|| [] });
+
+    res.render('single_product', { User, userCart, product, products: products || [] });
   } catch (error) {
     console.log(error);
     res.status(500).send('Internal Server Error');
   }
 };
+
 
 
 exports.shop = async (req, res) => {
@@ -447,6 +454,7 @@ exports.placeOrder = async (req, res) => {
       const id = req.params.id;
 
       const cartdisc = await cartSchema.findOne({ userId: userId });
+      console.log(cartdisc,"i am first cartdisc")
       const userModel = await UserSchema.findById(userId);
       const addressIndex = userModel.address.findIndex((item) => item._id.equals(id));
       const specifiedAddress = userModel.address[addressIndex];
@@ -588,19 +596,6 @@ exports.placeOrder = async (req, res) => {
       } else if (payment === "razorpay") {
         console.log(payment, "razorpay");
       
-        const shippingCharge = 150;
-        const order = new order_model({
-          user: userId,
-          items: items,
-          total: totalPrice - shippingCharge,
-          status: "Pending",
-          payment_method: payment,
-          createdAt: new Date(),
-          shipping_charge: shippingCharge,
-          address: specifiedAddress,
-        });
-        await order.save();
-      
         let razorpayTotal = 0;
       
         // Calculate the total amount for Razorpay by multiplying the totalPrice with the quantity for each product
@@ -643,7 +638,7 @@ exports.placeOrder = async (req, res) => {
             success: true,
             details: details,
           });
-          await cartSchema.deleteOne({ userId: userId });
+        
         } catch (error) {
           console.error("Error creating Razorpay order:", error);
           res.status(500).send({ success: false, msg: "Something went wrong!" });
@@ -660,18 +655,76 @@ exports.placeOrder = async (req, res) => {
   }
 };
 
-exports.verifyRazorpay =(req,res)=>{
-  const {razorpay_payment_id ,razorpay_order_id,razorpay_signature }= req.body.payment
-  console.log(razorpay_payment_id,razorpay_order_id,razorpay_signature,"verifying")
-  let hmac =crypto.createHmac('sha256',RAZORPAY_SECRET_KEY);
-  hmac.update(razorpay_order_id + '|' +razorpay_payment_id);
-  hmac=hmac.digest('hex');
-  if(hmac===razorpay_signature){
-    console.log("payment Successfull");
-  }else{
-    console.log("Payment failed")
+exports.verifyRazorpay = async (req,res)=>{
+  
+  try{
+    console.log("jewfnerferf");
+    const {razorpay_payment_id ,razorpay_order_id,razorpay_signature }= req.body.payment
+    console.log(razorpay_payment_id,razorpay_order_id,razorpay_signature,"verifying")
+    let hmac =crypto.createHmac('sha256',RAZORPAY_SECRET_KEY);
+    hmac.update(razorpay_order_id + '|' +razorpay_payment_id);
+    hmac=hmac.digest('hex');
+    if(hmac===razorpay_signature){
+
+  const User = req.session.user;
+  const userId = req.session.user?._id;
+  const cartdisc = await cartSchema.findOne({ userId: userId});
+  let totalPrice = cartdisc.total - cartdisc.discount;
+  const id = req.params.id;
+  const userModel = await UserSchema.findById(userId);
+  const addressIndex = userModel.address.findIndex((item) => item._id.equals(id));
+  const specifiedAddress = userModel.address[addressIndex];
+
+  const cart = await cartSchema.findOne({ userId: userId }).populate("products.productId");
+  cart ? console.log(cart) : console.log("Cart not found");
+
+  const items = cart.products.map((item) => {
+    const product = item.productId;
+    const quantity = item.quantity;
+    const price = product.price;
+
+    if (!price) {
+      throw new Error("Product price is required");
+    }
+    if (!product) {
+      throw new Error("Product is required");
+    }
+
+    return {
+      product: product._id,
+      quantity: quantity,
+      price: price,
+    };
+  });
+
+  const shippingCharge = 150;
+  const order = new order_model({
+    user: userId,
+    items: items,
+    total: totalPrice - shippingCharge,
+    status: "Pending",
+    payment_method: "razorpay",
+    createdAt: new Date(),
+    shipping_charge: shippingCharge,
+    address: specifiedAddress,
+  });
+  await order.save();
+  console.log(order,"cwenewewdjewdewd")
+    
+      console.log("payment Successfull");
+      cartSchema.deleteOne({ userId: userId })
+      res.send({success: true})
+    }else{
+      console.log("Payment failed")
+    }
+
+  }catch(error){
+    console.log(error)
   }
+ 
 }
+
+
 
 exports.invoice= async(req,res)=>{
 

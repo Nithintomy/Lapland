@@ -64,16 +64,10 @@
 </div>
 
 <% if (product.quantity > 0) { %>
-
   <% if (locals.User) { %>
-    <% const cartProduct = userCart?.products.find(p => p.productId.toString() === product._id.toString()); %>
-    <% if (cartProduct && cartProduct.quantity > 0) { %>
-      <p class="text-danger">Out of Stock</p>
-      <%} else { %>
     <form action="/addToCart/<%= product._id %>" method="post">
       <button class="btn btn--green  px-5" type="submit">Add to Cart</button>
     </form>
-    <% } %>
   <% } else { %>
     <form action="/login" method="get">
       <button class="btn btn--green   px-5" type="submit">Add to Cart</button>
@@ -265,11 +259,22 @@ function decrementQuantity(cartItemId) {
 
 </script>
 <script>
-function addToCart(productId) {
+
+	function addToCart(productId) {
   axios
-    .post('/addToCart/' + productId + "?page=single_product")
+    .post('/addToCart/' + productId + "?page=shop")
     .then(function (response) {
-      if (response.data.message === 'out of stock') {
+      if (response.data.message === 'Added to cart') {
+        // Show success toast notification
+        Toastify({
+          text: 'Product added to cart',
+          duration: 3000,
+          gravity: 'bottom',
+          position: 'center',
+          backgroundColor: '#36ab60',
+          stopOnFocus: true,
+        }).showToast();
+      } else if (response.data.message === 'out of stock') {
         // Show out of stock toast notification
         Toastify({
           text: 'Product is out of stock',
@@ -279,9 +284,6 @@ function addToCart(productId) {
           backgroundColor: '#f44336',
           stopOnFocus: true,
         }).showToast();
-      } else {
-        // Redirect to cart page
-        window.location.href = '/viewcart';
       }
     })
     .catch(function (error) {
@@ -296,6 +298,10 @@ function addToCart(productId) {
       }).showToast();
     });
 }
+  </script>
+  
+
+
 </script>
   
 

@@ -14,10 +14,7 @@ var productSchema=new mongoose.Schema({
        
        
     },
-    offer:{
-        type:Number,
-       
-    },
+
     quantity:{
         type:Number,
         require:true,
@@ -30,6 +27,10 @@ var productSchema=new mongoose.Schema({
         require:true,
        
        
+    },
+    outOfStock :{
+        type:Boolean
+
     },
     photo:[{
         type:String,

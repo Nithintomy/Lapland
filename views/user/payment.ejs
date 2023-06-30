@@ -23,12 +23,8 @@
     <link rel="stylesheet" href="/user/css/style.css">
     <link rel="stylesheet" href="/user/css/paymentaddress.css">
    
-
-
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     
- 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
@@ -245,7 +241,6 @@ $(document).ready(function(){
             "name": res.details.product_name,
             "image": "https://dummyimage.com/600x400/000/fff",
             "handler": function (response){
-              alert("Payment Succeeded");
               console.log("Payment SuccessFull");
               console.log(response, "dnfjnewfewbhfesbhf");
               verifyPayment(response,res.details.order_id);
@@ -283,10 +278,14 @@ $(document).ready(function(){
 
 function verifyPayment(payment,order_id){
     $.ajax({
-        url:"/verifySignature",
+        url:"/verifySignature/<%= address._id%>",
         type:"POST",
         data:{
             payment,order_id
+        },
+        success: function(response){
+          console.log(response,"response here");
+          window.location.href = '/shop'
         },
         error:function(err){
             console.log(err)

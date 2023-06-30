@@ -99,12 +99,14 @@ route.post('/placeOrder/:id',isblock, controller.placeOrder);
 
 route.post('/coupon',isblock,controller.coupon)
 
-route.post('/verifySignature',isblock,controller.verifyRazorpay)
+route.post('/verifySignature/:id',isblock,controller.verifyRazorpay)
 
 route.get('/invoice/:id',controller.invoice)
 
 //logout
 route.post('/log_out/:id',controller.log_out);
+
+
 
 
 module.exports=route
