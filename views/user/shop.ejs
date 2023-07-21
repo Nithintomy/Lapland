@@ -172,7 +172,7 @@ border:none;
 										<span><i class="ion-ios-cart"></i></span>
 									  </a>
 
-									  <a href="/wishlist/<%= product._id %>" class="heart d-flex justify-content-center align-items-center text-center ">
+									  <a  class="heart d-flex justify-content-center align-items-center text-center" href="#"  onclick="addToWishlist('<%= product._id %>')">
 										<span><i class="ion-ios-heart"></i></span>
 									</a>
 
@@ -297,6 +297,48 @@ border:none;
     });
 }
   </script>
+
+<script>
+	function addToWishlist(productId) {
+  axios
+    .post('/addTowishlist/' + productId)
+    .then(function (response) {
+      if (response.data.message === 'Added to wishlist') {
+        Toastify({
+          text: 'Product added to wishlist',
+          duration: 3000,
+          gravity: 'bottom',
+          position: 'center',
+          backgroundColor: '#36ab60',
+          stopOnFocus: true,
+        }).showToast();
+      } else if (response.data.message === 'Product is already in the wishlist') {
+        Toastify({
+          text: 'Product is already in the wishlist',
+          duration: 3000,
+          gravity: 'bottom',
+          position: 'center',
+          backgroundColor: '#f44336',
+          stopOnFocus: true,
+        }).showToast();
+      }
+    })
+    .catch(function (error) {
+      Toastify({
+        text: 'Failed to add product to wishlist',
+        duration: 3000,
+        gravity: 'bottom',
+        position: 'center',
+        backgroundColor: '#f44336',
+        stopOnFocus: true,
+      }).showToast();
+    });
+}
+</script>
+
+  
+
+
   
 
 

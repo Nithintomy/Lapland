@@ -1,87 +1,103 @@
 <%- include('header') %>
 
 
-  <!-- Custom CSS -->
-  <style>
-    .jumbotron {
-      background-color: #fff;
-      padding: 2rem 1rem;
-      margin-bottom: 2rem;
-      border-radius: 0.3rem;
-      text-align: center;
-    }
+    <style>
+        body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
 
-    .btn-primary {
-      background-color: #008CBA;
-      border-color: #008CBA;
-      margin: 10px;
-    }
+.success-container {
+    text-align: center;
+    padding: 40px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 50px auto;
+}
 
-    .btn-primary:hover {
-      background-color: #006B87;
-      border-color: #006B87;
-      margin: 10px;
-    }
+.success-img {
+    width: 40%;
+    height: 40%;
+    margin-bottom: 20px;
+}
 
-    img {
-      display: block;
-      margin: 0 auto;
-      width: 100%;
-      max-width: 500px;
-    }
+.success-heading {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    animation: colorChange 2s infinite;
+}
 
-    h1 {
-      font-size: 4rem;
-      font-weight: bold;
-      margin-bottom: 30px;
-    }
+.success-subtext {
+    font-size: 18px;
+    color: #000000;
+    margin-bottom: 20px;
+}
 
-    p {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-    }
+.button-container {
+    display: flex;
+    justify-content: center;
+    
+}
+.button-container a {
+    text-decoration: none;
+  }
 
-    hr {
-      border-top: 3px solid #006B87;
-      margin-top: 30px;
-      margin-bottom: 30px;
-      width: 50%;
-    }
+.success_btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
 
-    .address-item {
-      margin-bottom: 20px;
-    }
+.btn-primary1 {
+    background-color: #007bff;
+    color: #fff;
+}
 
-    .address-details {
-      font-size: 1.2rem;
-      line-height: 1.5;
-    }
-  </style>
-</head>
+.btn-primary1:hover {
+    background-color: #0056b3;
+}
 
-<body>
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-lg-8 col-md-10">
-        <div class="jumbotron">
-          <img src="https://xenoapp.com/wp-content/uploads/2020/01/Signs-of-a-Satisfied-Customer.png"
-            alt="Order Placed" />
-          <h1>Order Placed Successfully</h1>
-          <p>Thank you for your order!</p>
-          <hr>
-          <p>To view your order status or track your shipment, please check your email for updates.</p>
-          <div class="card-body">
-            <a href="/shop" class="btn btn-primary btn-lg">Continue Shopping</a>
-            <a href="/order/<%= User._id %>" class="btn btn-primary btn-lg">View Orders</a>
-          </div>
+.btn-secondary1 {
+    background-color: #f0f0f0;
+    color: #000000;
+}
+
+.btn-secondary1:hover {
+    background-color: #ccc;
+}
+.success-video{
+    width: 237px;
+}
+
+@keyframes colorChange {
+    0% { color: #007bff; }
+    50% { color: #00FF00; }
+    100% { color: #007bff; }
+}
+
+    </style>
+    <div class="success-container">
+        <img class="success-img" src="https://i.pinimg.com/originals/b9/88/b7/b988b7c3e84e1f83ef9447157831b460.gif" alt="">
+        <h1 class="success-heading">Order Placed Successfully</h1>
+        <p class="success-subtext">Thank you for your order!</p>
+        <p class="success-subtext">To view your order status or track your shipment, please check your email for updates.</p>
+        <video class="success-video" autoplay loop muted>
+            <source src="https://i.gifer.com/Q0t0.mp4" type="video/mp4">
+            Your browser does not support the gif.
+        </video>
+        <div class="button-container">
+          <a href="/shop" class="success_btn btn-primary1">Continue Shopping</a>
+          <a href="/order/<%= User._id %>" class="success_btn btn-secondary1 ">View Orders</a>
         </div>
-      </div>
     </div>
+    <%- include('footer') %>
 
 
-
-  </div>
-
-  
- 
-  <%- include('footer') %>

@@ -2,7 +2,7 @@
 
 
 
-</style>
+
 
 
 	<!-- order -->
@@ -26,6 +26,7 @@
                             
                         </tr>
                     </thead>
+                    <% if (locals.order_data && locals.order_data.length > 0) { %>
                     <tbody class="ordertable">
                         <% order_data.forEach((orders,index) =>{ %>
                         <tr>
@@ -106,6 +107,13 @@
             
 
                     </tbody>
+                    <% } else { %>
+                        <tbody>
+                          <tr>
+                            <td colspan="9">No orders found</td>
+                          </tr>
+                        </tbody>
+                      <% } %>
                 </table>
             </div>
         </div>

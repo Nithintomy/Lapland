@@ -8,7 +8,9 @@
     <div class="row">
       <div class="col-lg-6 mb-5 ftco-animate">
         <a href="#" class="image">
-          <img id="mainImage" src="/<%= product.photo[0] %>" class="img-fluid img-zoom" alt="Colorlib Template" data-zoom-image="/<%= product.photo[0] %>">
+          <div id="zoomContainer">
+            <img id="mainImage" src="/<%= product.photo[0] %>" class="img-fluid img-zoom" alt="Colorlib Template">
+          </div>
         </a>
         <div class="row mt-4">
           <div class="col-lg-4 mb-4 ftco-animate">
@@ -165,7 +167,9 @@
   </div>
 </div>
 </section>
+</section>
 
+<%- include('footer') %>
 
 
 <script>
@@ -174,7 +178,7 @@
     $('.sub-photo-link').on('click', function(event) {
       event.preventDefault();
       var photoUrl = $(this).data('photo');
-      $('#mainImage').attr('src', photoUrl).data('zoom-image', photoUrl);
+      $('#mainImage').attr('src', photoUrl);
       // Reinitialize elevateZoom on the main image
       $('.img-zoom').elevateZoom();
     });
@@ -182,6 +186,7 @@
     // Image zooming
     $('.img-zoom').elevateZoom();
   });
+
 
 
   $(document).ready(function() {
@@ -306,6 +311,3 @@ function decrementQuantity(cartItemId) {
   
 
 
-</section>
-
-<%- include('footer') %>

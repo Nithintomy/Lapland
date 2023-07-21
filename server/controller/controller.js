@@ -723,6 +723,13 @@ exports.verifyRazorpay = async (req,res)=>{
   }
  
 }
+exports.razorpaySuccess= async(req,res)=>{
+  const User = req.session.user;
+  const id = req.params.id;
+  const userId = req.session.user?._id;
+  res.render("confirm",{User,userId,id});
+
+}
 
 
 
@@ -1079,7 +1086,6 @@ exports.order_details = async (req, res) => {
 
 
 
-
 //order cancel
 exports.ordercancel = async (req, res) => {
   try {
@@ -1089,7 +1095,14 @@ exports.ordercancel = async (req, res) => {
     // Update the order using findByIdAndUpdate
     await order_model.findByIdAndUpdate(orderId, { status: cancelled });
     const order_data = await order_model.find({user:id}).populate("items.product").populate("items.quantity")
-    res.render('orders',{order_data});
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = 10;
+
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const ordersToShow = order_data.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(order_data.length / itemsPerPage);
+    res.render('orders',{order_data: ordersToShow, currentPage: page, totalPages,itemsPerPage});
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal Server Error');
@@ -1265,31 +1278,30 @@ exports.addTowishlist = async (req, res) => {
   try {
     const userId = req.session.user?._id;
     const productId = req.params.id;
-
     const wishlist = await Wishlist.findOne({ userId: userId });
     if (!wishlist) {
-      // If the wishlist doesn't exist for the user, create a new one
       const newWishlist = new Wishlist({ userId: userId, products: [] });
       await newWishlist.save();
-      
     }
 
     // Check if the product is already in the wishlist
     const isProductInWishlist = wishlist.products.includes(productId);
-    console.log(isProductInWishlist,"ok product list")
-    if (!isProductInWishlist) {
-      // If the product is not already in the wishlist, add it
-      wishlist.products.push(productId);
-      await wishlist.save();
-      console.log(wishlist,"wwjff")
+    if (isProductInWishlist) {
+      res.json({ message: 'Product is already in the wishlist' });
+      return;
     }
 
-    res.redirect('/shop');
+    // If the product is not already in the wishlist, add it
+    wishlist.products.push(productId);
+    await wishlist.save();
+ 
+    res.json({ message: 'Added to wishlist' });
   } catch (error) {
     console.log(error);
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({ message: 'Failed to add product to wishlist' });
   }
 };
+
 
 //delete wishlist 
 

@@ -1,15 +1,20 @@
 <%- include('header') %>
 
+<style>
+	
+</style>
 
 
-	<section class="ftco-section ftco-cart ">
-		<div class="container">
-			<div class="row">
-			<div class="col-md-12 ftco-animate">
-				<div class="cart-list">
 
-					
-					<table class="table">
+<section class="ftco-section ftco-cart remove_scrollbar">
+	<div class="container">
+	  <div class="row">
+		<div class="col-md-12 ftco-animate  responsive-table">
+		  <div class="cart-list  " >
+			<div class="table-container">
+				<div class="table-responsive">
+				  <table class="table">
+			
 						<thead class="thead-primary">
 						  <tr class="text-center">
 							<th>&nbsp;</th>
@@ -45,7 +50,6 @@
 										<i class="ion-ios-add"></i>
 									  </button>
 									</span>
-
 								  </div>
 								  <div class="enthelum" id="remains_<%= product.productId._id %>" data-remaining-quantity="<%= (product.productId.quantity - product.quantity) %>">
 									<% if (product.productId.quantity - product.quantity <= 5 && (product.productId.quantity - product.quantity) > 0) { %>
@@ -56,8 +60,6 @@
 									  <span><%= (product.productId.quantity - product.quantity) %></span>
 									<% } %>
 								  </div>
-								
-												
 								</td>
 								<% var total = product.quantity * product.productId.price %>
 								<td id="product-total-price-<%= product.productId._id %>" class="item-total">₹ <%= total %></td>
@@ -76,11 +78,14 @@
 							</tr>
 						  <% } %>
 						</tbody>
-					  </table>
-					  
-				  </div>
+					</table>
+				</div>
+			  </div>
+			  </div>
 			</div>
-		</div>
+		  </div>
+	  
+			  
 		<div class="row justify-content-end">
 
 
@@ -107,11 +112,8 @@
 				<p><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
 				<% } %>
 			</div>
-
-			
-	
 		</div>
-		</div>
+	  </div>
 	</section>
 
 		<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">

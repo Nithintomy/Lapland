@@ -1,51 +1,108 @@
-<%- include ('header')%>
-<body>
+<%- include('header') %>
 
-    <!-- Start Header Area -->
-	
-	<!-- End Header Area -->
 
-    <!-- Start Banner Area -->
+    <style>
+        body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.success-container {
+    text-align: center;
+    padding: 40px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+.success-img {
+    width: 40%;
+    height: 40%;
+    margin-bottom: 20px;
+}
+
+.success-heading {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    animation: colorChange 2s infinite;
+}
+
+.success-subtext {
+    font-size: 18px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
     
-    <!-- End Banner Area -->
+}
+.button-container a {
+    text-decoration: none;
+  }
 
-    <!--================Checkout Area =================-->
-    <section class="checkout_area section_gap">
-        <div class="container">
-            <div class="billing_details">
-                <div class="row ">
-                        <div class="col-md-12"> 
-                              <div class = "main">
-                                  <div class="row padder"> 
-                                      <div class="col-md-9"> 
-                                        <h3>Order Placed Successfully </h3>
-                                        <p>Thank you for your order!</p>
-                                          <h5> Your Paypal Payment was: <%= payment.state %></h5>
-                                          <h6> Payment Id: <%= payment.id %> </h6> 
-                                          <hr>
-                                          <img src="https://xenoapp.com/wp-content/uploads/2020/01/Signs-of-a-Satisfied-Customer.png"
-                                                    alt="Order Placed" />
-                                         
-                                          <hr> 
-                                          <div class="card-body">
-                                            <a href="/shop" class="btn btn-primary btn-lg">Continue Shopping</a>
-                                            <a href="/order/<%= User._id %>" class="btn btn-primary btn-lg">View Orders</a>
-                                          </div>
-                                      </div> 
-                                  </div> 
-                               </div>
-                        </div> 
-                   </div>
-            </div>
+.success_btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary1 {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary1:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary1 {
+    background-color: #f0f0f0;
+    color: #000000;
+}
+
+.btn-secondary1:hover {
+    background-color: #ccc;
+}
+.success-video{
+    width: 237px;
+}
+.green-text {
+  color: green;
+}
+
+@keyframes colorChange {
+    0% { color: #007bff; }
+    50% { color: #00FF00; }
+    100% { color: #007bff; }
+}
+
+    </style>
+    <div class="success-container">
+        <img class="success-img" src="https://i.pinimg.com/originals/b9/88/b7/b988b7c3e84e1f83ef9447157831b460.gif" alt="">
+        <h1 class="success-heading">Order Placed Successfully</h1>
+        <p class="success-subtext">Thank you for your order!</p>
+        <h5>Your Paypal Payment was: <span class="green-text"><%= payment.state %></span></h5>
+        <h6> Payment Id: <%= payment.id %> </h6>
+        <video class="success-video" autoplay loop muted>
+            <source src="https://i.gifer.com/Q0t0.mp4" type="video/mp4">
+            Your browser does not support the gif.
+        </video>
+        <div class="button-container">
+          <a href="/shop" class="success_btn btn-primary1">Continue Shopping</a>
+          <a href="/order/<%= User._id %>" class="success_btn btn-secondary1 ">View Orders</a>
         </div>
-    </section>
-   
-    <!--================End Checkout Area =================-->
-
-    <!-- start footer Area -->
-
-    <!-- End footer Area -->
+    </div>
+    <%- include('footer') %>
 
 
-  
-    <%- include ('footer')%>
+

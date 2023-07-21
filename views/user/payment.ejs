@@ -285,7 +285,7 @@ function verifyPayment(payment,order_id){
         },
         success: function(response){
           console.log(response,"response here");
-          window.location.href = '/shop'
+          window.location.href = '/razorpaySuccess/' + order_id
         },
         error:function(err){
             console.log(err)

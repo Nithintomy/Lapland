@@ -73,7 +73,7 @@ route.post('/api/users',controller.create);
 //wishlist 
 
 
-route.get('/wishlist/:id',controller.addTowishlist)
+route.post('/addTowishlist/:id', controller.addTowishlist);
 route.get('/viewWishlist',controller.viewWishlist)
 route.get('/deleteWishlist/:id',controller.deleteWishlist)
 
@@ -100,9 +100,9 @@ route.post('/placeOrder/:id',isblock, controller.placeOrder);
 route.post('/coupon',isblock,controller.coupon)
 
 route.post('/verifySignature/:id',isblock,controller.verifyRazorpay)
+route.get('/razorpaySuccess/:id',controller.razorpaySuccess)
 
 route.get('/invoice/:id',controller.invoice)
-
 //logout
 route.post('/log_out/:id',controller.log_out);
 
