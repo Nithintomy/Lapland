@@ -1,60 +1,7 @@
 <%- include('header') %>
 
 <style>
-  .center1 {
-  height: 37vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #000;
-}
-.wave {
-  width: 5px;
-  height: 100px;
-  background: linear-gradient(45deg, cyan, #fff);
-  margin: 10px;
-  animation: wave 1s linear infinite;
-  border-radius: 20px;
-}
-.wave:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.wave:nth-child(3) {
-  animation-delay: 0.2s;
-}
-.wave:nth-child(4) {
-  animation-delay: 0.3s;
-}
-.wave:nth-child(5) {
-  animation-delay: 0.4s;
-}
-.wave:nth-child(6) {
-  animation-delay: 0.5s;
-}
-.wave:nth-child(7) {
-  animation-delay: 0.6s;
-}
-.wave:nth-child(8) {
-  animation-delay: 0.7s;
-}
-.wave:nth-child(9) {
-  animation-delay: 0.8s;
-}
-.wave:nth-child(10) {
-  animation-delay: 0.9s;
-}
 
-@keyframes wave {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
 .banner-sub {
   opacity: 0;
   transform: translateY(50%);
@@ -263,16 +210,16 @@
     </section>
 
 		
-		<section class="ftco-section img" style="background-image: url(/user/images/bg_3.jpg); opacity: 0.9;">
+		<section class="ftco-section img" style="background-image: url(/user/images/apple_offer.jpg); opacity: 0.9;">
     	<div class="container">
 				<div class="row justify-content-end">
           <div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate">
-          	<span class="subheading text-warning">Best Price For You</span>
+          	<span class="subheading text-dark">Best Price For You</span>
             <h2 class="mb-4 text-warning">Deal of the day</h2>
-            <p class="text-white">Stay connected and productive with our reliable laptops. Whether for work or leisure,
+            <p class="text-black ">Stay connected and productive with our reliable laptops. Whether for work or leisure,
                our laptops offer the performance and reliability you can count on.</p>
             <h3 class="text-muted"><a href="#">APPLE</a></h3>
-            <span class="price text-white">₹ 180000 <a href="#">now ₹ 130000 only</a></span>
+            <span class="price text-black">₹ 180000 <a href="#">now ₹ 130000 only</a></span>
             <div id="timer" class="d-flex mt-5">
 						  <div class="time" id="days"></div>
 						  <div class="time pl-3" id="hours"></div>
@@ -304,9 +251,25 @@
                     </span>
                   </div>
                   <div class="text text-center">
-                    <p class="mb-5 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p class="mb-5 pl-4 line">"I am absolutely thrilled with my new laptop from Lap Land! The performance is top-notch, and it handles all my tasks with ease. "</p>
                     <p class="name">Garreth Smith</p>
                     <span class="position">Marketing Manager</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap p-4 pb-5">
+                  <div class="user-img mb-5" style="background-image: url(/user/images/person_3.jpg)">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                  </div>
+                  <div class="text text-center">
+                    <p class="mb-5 pl-4 line">" The laptop's sleek design and powerful features exceeded my expectations.  Thank you, Lap Land!"
+                      <br>
+                    </p>
+                    <p class="name">Michael</p>
+                    <span class="position">Interface Designer</span>
                   </div>
                 </div>
               </div>
@@ -318,9 +281,9 @@
                     </span>
                   </div>
                   <div class="text text-center">
-                    <p class="mb-5 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
-                    <span class="position">Interface Designer</span>
+                    <p class="mb-5 pl-4 line">"I am impressed by the quality and performance of the laptop I bought from Lap Land. It's a great value for the price"</p>
+                    <p class="name">Daniel</p>
+                    <span class="position">Builder</span>
                   </div>
                 </div>
               </div>
@@ -378,20 +341,7 @@
 
     
     <br>
-    <div class="center1">
-      <div class="wave"></div>
-      <div class="wave"></div>
-      <div class="wave"></div>
-      <div class="wave"></div>
-      <div class="wave"></div>
-      <div class="wave"></div>
-      <div class="wave"></div>
-      <div class="wave"></div>
-      <div class="wave"></div>
-      <div class="wave"></div>
-    </div>
-    <br>
-    <br>
+   
 
 
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
