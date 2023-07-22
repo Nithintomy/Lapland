@@ -558,8 +558,8 @@ exports.placeOrder = async (req, res) => {
           intent: "sale",
           payer: { payment_method: "paypal" },
           redirect_urls: {
-            return_url: `http://localhost:3000/paypalSuccess/${userId}`,
-            cancel_url: "http://localhost:3000/paypal_err",
+            return_url: `http://lapland.website/paypalSuccess/${userId}`,
+            cancel_url: "http://lapland.website/paypal_err",
           },
           transactions: [
             {
