@@ -441,9 +441,9 @@ exports.blog = (req, res) => {
 
 
 
-let paypalTotal = 0;
 
 
+  let paypalTotal;
 exports.placeOrder = async (req, res) => {
   if (req.session.user) {
     try {
@@ -547,7 +547,7 @@ exports.placeOrder = async (req, res) => {
           address: specifiedAddress,
         });
         await order.save();
-
+        paypalTotal = 0; 
         cart.products.forEach((element) => {
           paypalTotal += totalPrice;
         });
@@ -760,7 +760,7 @@ exports.paypal_success = async (req, res) => {
     "transactions": [{
       "amount": {
         "currency": "USD",
-        "total": paypalTotal
+        "total": (paypalTotal / 82).toFixed(2), // Divide by 82 to convert to USD
       }
     }]
   };
